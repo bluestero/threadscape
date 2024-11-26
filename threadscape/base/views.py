@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models, forms
 
 
@@ -15,5 +15,15 @@ def thread(request, pk):
 
 def create_thread(request):
     form = forms.ThreadForm()
+
+    if request.method == "POST":
+        form = forms.ThreadForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect("home")
+
+
     context = {"form": form}
     return render(request, "base/thread_form.html", context)
