@@ -1,4 +1,10 @@
-<a href = "/">
+<!--Logo to redirect to the homepage-->
+<a href = "{% url 'home' %}">
     <h1>LOGO</h1>
 </a>
+
+<form method = "GET" action = "{% url 'home' %}">
+    <input type = "text" name = "topic" placeholder = "Search Threads . . .">
+</form>
+
 <hr>

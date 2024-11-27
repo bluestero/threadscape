@@ -10,6 +10,9 @@
 <!--block content start-->
 {% block content %}
 
+<!--Importing the static files-->
+<link rel="stylesheet" href="{% static 'base/home.css' %}">
+
 <!--Main container div start-->
 <div class = "home-container">
 
@@ -20,10 +23,15 @@
         <h3>Browse Topics</h3>
         <hr>
 
+        <!--Link to remove topic filter-->
+        <div>
+            <a href = "{% url 'home' %}">All</a>
+        </div>
+
         <!--Iterating the topics and adding them dynamically-->
         {% for topic in topics %}
         <div>
-            <a href = "{% url 'topic' topic.id %}"><span>{{ topic.name }}</span></a>
+            <a href = "{% url 'home' %}?topic={{ topic.name }}">{{ topic.name }}</a>
         </div>
         {% endfor %}
 

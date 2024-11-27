@@ -5,8 +5,11 @@ from . import models, forms
 #-Function to render the homepage-#
 def home(request):
 
+    #-Getting the topic filter if given else using star-#
+    topic = request.GET.get("topic", "")
+
     #-Fetching all the thread and topic records-#
-    threads = models.Thread.objects.all()
+    threads = models.Thread.objects.filter(topic__name__icontains = topic)
     topics = models.Topic.objects.all()
 
     #-Creating the context object to render-#
