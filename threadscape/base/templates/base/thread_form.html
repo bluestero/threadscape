@@ -12,8 +12,14 @@
 
     <!--Form for creating a thread-->
     <form method = "POST", action = "">
+
+        <!-- CSRF Token -->
         {% csrf_token %}
+
+        <!-- Rendering the ThreadForm object -->
         {{ form.as_p }}
+
+        <!-- Submit button to create / update -->
         <input type = "submit" value = "Submit" />
     </form>
 

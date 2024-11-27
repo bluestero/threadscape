@@ -10,11 +10,7 @@
 
 <!-- Displaying logout button if the user is authenticated -->
  {% if request.user.is_authenticated %}
- <a href = "{% url 'logout-user' %}">Logout</a>
-
- <!-- Else displaying link to the login page -->
- {% else %}
- <a href = "{% url 'login-page' %}">Login</a>
+ <a href = "{% url 'logout' %}">Logout</a>
 
 <!--Closing the if tag-->
 {% endif %}

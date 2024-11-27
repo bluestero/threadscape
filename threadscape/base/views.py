@@ -1,7 +1,9 @@
 from . import models, forms
 from django.db.models import Q
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
@@ -9,11 +11,18 @@ from django.contrib.auth import authenticate, login, logout
 #-Function to render the login page-#
 def login_page(request):
 
+    #-Base object-#
+    page = "login"
+
+    #-Redirecting to the homepage if the user is authenticated-#
+    if request.user.is_authenticated:
+        return redirect("home")
+
     #-Checking if method is POST, meaning form was submitted-#
     if request.method == "POST":
 
         #-Getting the user login details-#
-        username = request.POST.get("username")
+        username = request.POST.get("username").lower()
         password = request.POST.get("password")
 
         #-Getting the record with the username from the User model-#
@@ -40,7 +49,7 @@ def login_page(request):
             messages.error(request, f"User '{username}' does not exist.")
 
     #-Creating the context object to render-#
-    context = {}
+    context = {"page": page}
 
     #-Returning the rendered page-#
     return render(request, "base/login.html", context)
@@ -54,7 +63,47 @@ def logout_user(request):
     return redirect("home")
 
 
+#-Function to render the login page but for registration-#
+def register_page(request):
+
+    #-Creating the registration form object from the User model-#
+    form = UserCreationForm()
+
+    #-Checking if method is POST, meaning form was submitted-#
+    if request.method == "POST":
+
+        #-Filling the form object using the submitted data-#
+        form = UserCreationForm(request.POST)
+
+        #-Checking if the form and its data is valid-#
+        if form.is_valid():
+
+            #-Getting the user data without saving to the database-#
+            user = form.save(commit = False)
+
+            #-Performing some cleanup like lowercasing the username-#
+            user.username = user.username.lower()
+
+            #-Saving the cleaned data to the database-#
+            user.save()
+
+            #-Logging the user in and redirecting to the home page-#
+            login(request, user)
+            return redirect("home")
+
+        #-Returning an error flash message if invalid form-#
+        else:
+            messages.error(request, "An error occurred during registration.")
+
+    #-Creating the context object to render-#
+    context = {"form": form}
+
+    #-Returning the rendered page-#
+    return render(request, "base/login.html", context)
+
+
 #-Function to render the homepage-#
+@login_required(login_url = "login")
 def home(request):
 
     #-Getting the topic filter if given else using star-#
@@ -103,7 +152,7 @@ def topic(request, pk):
 
 
 #-Function to render the thread creation page or create thread-#
-@login_required(login_url = "login-page")
+@login_required(login_url = "login")
 def create_thread(request):
 
     #-Creating the form object-#
@@ -128,12 +177,16 @@ def create_thread(request):
 
 
 #-Function to update the thread details-#
-@login_required(login_url = "login-page")
+@login_required(login_url = "login")
 def update_thread(request, pk):
 
     #-Getting the thread from the ID and filling the form with it-#
     thread = models.Thread.objects.get(id = pk)
     form = forms.ThreadForm(instance = thread)
+
+    #-Return a warning page if user tries to access thread not owned by them-#
+    if request.user != thread.host:
+        return HttpResponse("You are not allowed here!")
 
     #-Checking if method is POST, meaning form was submitted-#
     if request.method == "POST":
@@ -154,14 +207,18 @@ def update_thread(request, pk):
 
 
 #-Function to delete the selected thread-#
-@login_required(login_url = "login-page")
+@login_required(login_url = "login")
 def delete_thread(request, pk):
 
     #-Getting the thread for the given id-#
-    thread = models.Thread.objects.filter(id = pk)
+    thread = models.Thread.objects.get(id = pk)
+
+    #-Return a warning page if user tries to access thread not owned by them-#
+    if request.user != thread.host:
+        return HttpResponse("You are not allowed here!")
 
     #-Deleting the record and redirecting to home if the request was through form submit-#
-    if request.method == "POST" and thread.exists():
+    if request.method == "POST":
         thread.delete()
         return redirect("home")
 

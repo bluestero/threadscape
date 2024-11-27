@@ -13,23 +13,64 @@
 <!--Main container div start-->
 <div>
 
-    <!-- Form for user login -->
-    <form method = "POST" action = "">
+    <!-- Render login form if page is login -->
+     {% if page == 'login' %}
 
-        <!-- CSRF Token -->
-        {% csrf_token %}
+    <!-- Login form div start -->
+    <div>
 
-        <!-- Username field -->
-        <label>Username</label>
-        <input type = "text" name = "username" placeholder = "Enter username" />
+        <!-- Form for user login -->
+        <form method = "POST" action = "">
+    
+            <!-- CSRF Token -->
+            {% csrf_token %}
+    
+            <!-- Username field -->
+            <label>Username</label>
+            <input type = "text" name = "username" placeholder = "Enter username" />
+    
+            <!-- Password Field -->
+            <label>Password</label>
+            <input type = "password" name = "password" placeholder = "Enter username" />
+    
+            <!-- Submit button to login -->
+            <input type = "submit" value = "Login" />
+        </form>
 
-        <!-- Password Field -->
-        <label>Password</label>
-        <input type = "password" name = "password" placeholder = "Enter username" />
+        <!-- Link to switch to register page -->
+         <p>Haven't signed up yet?</p>
+         <a href = "{% url 'register' %}">Sign-up now!</a>
 
-        <!-- Submit button to login -->
-        <input type = "submit" value = "login" />
-    </form>
+    <!-- Login form div end -->
+    </div>
+
+    <!-- Else render the registration page -->
+    {% else %}
+
+    <!-- Registration form div start-->
+    <div>
+        <!-- Form for user register -->
+        <form method = "POST" action = "">
+    
+            <!-- CSRF Token -->
+            {% csrf_token %}
+
+            <!--Form for creating a thread-->
+            {{ form.as_p }}
+
+            <!-- Submit button to register -->
+            <input type = "submit" value = "Register" />
+        </form>
+
+        <!-- Link to switch to register page -->
+        <p>Already signed up?</p>
+        <a href = "{% url 'login' %}">Sign-in now!</a>
+
+    <!-- Registration form div end -->
+    </div>
+
+    <!-- If block end -->
+     {% endif %}
 
 <!--Main container div and block content end-->
 </div>
