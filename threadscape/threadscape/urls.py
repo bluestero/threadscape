@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+#-Main url paths for the threadscape project-#
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("base.urls")),

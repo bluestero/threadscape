@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
+#-URL patterns for the base app path-#
 urlpatterns = [
     path("", views.home, name = "home"),
     path("topic/<str:pk>/", views.topic, name = "topic"),
