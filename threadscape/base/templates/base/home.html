@@ -9,6 +9,8 @@
 
     {% for thread in threads %}
     <div>
+        <a href="{% url 'update-thread' thread.id %}"><span>Edit</span></a>
+        <a href="{% url 'delete-thread' thread.id %}"><span>Delete</span></a>
         <span>@{{ thread.host.username }}</span>
         <h5>{{ thread.id }} - <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a></h5>
         <small>{{ thread.topic.name }}</small>

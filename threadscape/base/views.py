@@ -8,12 +8,15 @@ def home(request):
     context = {"threads": threads}
     return render(request, "base/home.html", context)
 
+
 def thread(request, pk):
     thread = models.Thread.objects.get(id = pk)
     context = {"thread": thread}
     return render(request, "base/thread.html", context)
 
+
 def create_thread(request):
+
     form = forms.ThreadForm()
 
     if request.method == "POST":
@@ -24,6 +27,39 @@ def create_thread(request):
 
             return redirect("home")
 
-
     context = {"form": form}
     return render(request, "base/thread_form.html", context)
+
+
+def update_thread(request, pk):
+
+    thread = models.Thread.objects.get(id = pk)
+    form = forms.ThreadForm(instance = thread)
+
+    if request.method == "POST":
+
+        form = forms.ThreadForm(request.POST, instance = thread)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect("home")
+
+    context = {"form": form}
+
+    return render(request, "base/thread_form.html", context)
+
+
+def delete_thread(request, pk):
+
+    thread = models.Thread.objects.filter(id = pk)
+
+    if request.method == "POST" and thread.exists():
+
+        thread.delete()
+
+        return redirect("home")
+
+    context = {"object": thread}
+
+    return render(request, "base/delete.html", context)
