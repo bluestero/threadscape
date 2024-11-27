@@ -1,0 +1,36 @@
+<!--Inheriting the main template-->
+{% extends 'main.html' %}
+
+<!--Loading the static files-->
+{% load static %}
+
+<!--Adding title-->
+{% block title %}Login Page{% endblock title %}
+
+<!--block content start-->
+{% block content %}
+
+<!--Main container div start-->
+<div>
+
+    <!-- Form for user login -->
+    <form method = "POST" action = "">
+
+        <!-- CSRF Token -->
+        {% csrf_token %}
+
+        <!-- Username field -->
+        <label>Username</label>
+        <input type = "text" name = "username" placeholder = "Enter username" />
+
+        <!-- Password Field -->
+        <label>Password</label>
+        <input type = "password" name = "password" placeholder = "Enter username" />
+
+        <!-- Submit button to login -->
+        <input type = "submit" value = "login" />
+    </form>
+
+<!--Main container div and block content end-->
+</div>
+{% endblock content %}

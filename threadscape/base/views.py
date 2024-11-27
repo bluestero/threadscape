@@ -1,5 +1,57 @@
-from django.shortcuts import render, redirect
 from . import models, forms
+from django.db.models import Q
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+
+
+#-Function to render the login page-#
+def login_page(request):
+
+    #-Checking if method is POST, meaning form was submitted-#
+    if request.method == "POST":
+
+        #-Getting the user login details-#
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        #-Getting the record with the username from the User model-#
+        user = models.User.objects.filter(username = username)
+
+        #-Checkig if the user exists in our database-#
+        if user.exists():
+
+            #-Getting the user authenticated-#
+            user = authenticate(request, username = username, password = password)
+
+            #-Logging in the user and redirecting to the home directory if authentication is successful-#
+            if user:
+                login(request, user)
+                return redirect("home")
+
+
+            #-Throwing error if the authentication failed-#
+            else:
+                messages.error(request, f"Invalid password entered for '{username}'.")
+
+        #-Throwing error message if a user does not exist-#
+        else:
+            messages.error(request, f"User '{username}' does not exist.")
+
+    #-Creating the context object to render-#
+    context = {}
+
+    #-Returning the rendered page-#
+    return render(request, "base/login.html", context)
+
+
+#-Function to logout the user-#
+def logout_user(request):
+
+    #-Logging out the user and redirecting to the home page-#
+    logout(request)
+    return redirect("home")
 
 
 #-Function to render the homepage-#
@@ -9,11 +61,15 @@ def home(request):
     topic = request.GET.get("topic", "")
 
     #-Fetching all the thread and topic records-#
-    threads = models.Thread.objects.filter(topic__name__icontains = topic)
     topics = models.Topic.objects.all()
+    threads = models.Thread.objects.filter(
+        Q(topic__name__icontains = topic) |
+        Q(name__icontains = topic) |
+        Q(description__icontains = topic)
+    )
 
     #-Creating the context object to render-#
-    context = {"threads": threads, "topics": topics}
+    context = {"threads": threads, "topics": topics, "room_count": threads.count()}
 
     #-Returning the rendered page-#
     return render(request, "base/home.html", context)
@@ -47,6 +103,7 @@ def topic(request, pk):
 
 
 #-Function to render the thread creation page or create thread-#
+@login_required(login_url = "login-page")
 def create_thread(request):
 
     #-Creating the form object-#
@@ -71,6 +128,7 @@ def create_thread(request):
 
 
 #-Function to update the thread details-#
+@login_required(login_url = "login-page")
 def update_thread(request, pk):
 
     #-Getting the thread from the ID and filling the form with it-#
@@ -96,6 +154,7 @@ def update_thread(request, pk):
 
 
 #-Function to delete the selected thread-#
+@login_required(login_url = "login-page")
 def delete_thread(request, pk):
 
     #-Getting the thread for the given id-#

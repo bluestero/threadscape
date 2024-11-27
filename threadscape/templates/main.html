@@ -17,6 +17,15 @@
     <!--Adding the navbar-->
     {% include 'navbar.html' %}
 
+    <!-- Code to display the flash messages -->
+    {% if messages %}
+    <ul class = "messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <!--Block content to be overridden-->
     {% block content %}
     Default content
