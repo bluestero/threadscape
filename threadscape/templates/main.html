@@ -1,20 +1,54 @@
+<!--DOCUMENT INFO-->
 <!DOCTYPE html>
 <html>
+
+<!--Header and other imports-->
 <head>
     <meta charset='utf-8'>
     <link rel="shortcut icon" href="#">
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>{% block title %}Default Title{% endblock title %}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
-    <!-- <script src='main.js'></script> -->
 </head>
+
+<!--Body start-->
 <body>
 
+    <!--Adding the navbar-->
     {% include 'navbar.html' %}
 
+    <!--Block content to be overridden-->
     {% block content %}
     Default content
     {% endblock content %}
+
+    <!--Toast component overlay to display toast notifications-->
+    <div class="toast-overlay" id="toast-overlay"></div>
+
+    <!--Cursor component for cursor trail effect-->
+    <div class="cursor">
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+        <div class="cursor-circle"></div>
+    </div>
+
+<!--End of Body and HTML-->
 </body>
 </html>

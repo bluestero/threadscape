@@ -1,15 +1,22 @@
+<!--Inheriting the main template-->
 {% extends 'main.html' %}
 
+<!--Adding title-->
 {% block title %}Create Thread{% endblock title %}
 
+<!--block content start-->
 {% block content %}
 
+<!--Main container div start-->
 <div>
+
+    <!--Form for creating a thread-->
     <form method = "POST", action = "">
         {% csrf_token %}
         {{ form.as_p }}
         <input type = "submit" value = "Submit" />
     </form>
-</div>
 
+<!--Main container div and block content end-->
+</div>
 {% endblock content %}

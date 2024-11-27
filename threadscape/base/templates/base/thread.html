@@ -1,7 +1,18 @@
+<!--Inheriting the main template-->
 {% extends 'main.html' %}
 
+<!--Adding title-->
 {% block title %}{{ thread.name }}{% endblock title %}
 
+<!--block content start-->
 {% block content %}
-<h2>Thread {{ thread.id }} - {{ thread.name }}</h2>
+
+<!--Main container div start-->
+<div>
+
+    <!--Dummy data-->
+    <h2>Thread {{ thread.id }} - {{ thread.name }}</h2>
+
+<!--Main container div and block content end-->
+</div>
 {% endblock content %}
