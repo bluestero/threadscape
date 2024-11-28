@@ -103,7 +103,6 @@ def register_page(request):
 
 
 #-Function to render the homepage-#
-@login_required(login_url = "login")
 def home(request):
 
     #-Getting the topic filter if given else using star-#
@@ -134,11 +133,50 @@ def thread(request, pk):
     thread_messages = models.Message.objects.filter(thread = pk)
     thread_messages = thread.message_set.all()
 
+    #-Getting all the participants of the thread-#
+    participants = thread.participants.all()
+
+    #-Checking if method is POST, meaning form was submitted-#
+    if request.method == "POST":
+
+        #-Creating a message in the Message model using the POST data-#
+        models.Message.objects.create(
+            user = request.user,
+            thread = thread,
+            body = request.POST.get("body")
+        )
+
+        #-Adding the user to the participants list-#
+        thread.participants.add(request.user)
+
+        #-Returning the user to the same thread page-#
+        return redirect("thread", pk = thread.id)
+
     #-Creating the context object to render-#
-    context = {"thread": thread, "thread_messages": thread_messages}
+    context = {"thread": thread, "thread_messages": thread_messages, "participants": participants}
 
     #-Returning the rendered page-#
     return render(request, "base/thread.html", context)
+
+
+#-Function to delete a message from a thread-#
+@login_required(login_url = "login")
+def delete_message(request, pk):
+
+    #-Getting the message for the given id-#
+    message = models.Message.objects.get(id = pk)
+    thread_id = message.thread.id
+
+    #-Deleting the record and redirecting to home if the request was through form submit-#
+    if request.method == "POST":
+        message.delete()
+        return redirect("thread", pk = thread_id)
+
+    #-Creating the context object to render-#
+    context = {"object": message}
+
+    #-Returning the rendered page-#
+    return render(request, "base/delete.html", context)
 
 
 #-Function to render threads with the selected topic-#
@@ -188,10 +226,6 @@ def update_thread(request, pk):
     thread = models.Thread.objects.get(id = pk)
     form = forms.ThreadForm(instance = thread)
 
-    #-Return a warning page if user tries to access thread not owned by them-#
-    if request.user != thread.host:
-        return HttpResponse("You are not allowed here!")
-
     #-Checking if method is POST, meaning form was submitted-#
     if request.method == "POST":
 
@@ -216,10 +250,6 @@ def delete_thread(request, pk):
 
     #-Getting the thread for the given id-#
     thread = models.Thread.objects.get(id = pk)
-
-    #-Return a warning page if user tries to access thread not owned by them-#
-    if request.user != thread.host:
-        return HttpResponse("You are not allowed here!")
 
     #-Deleting the record and redirecting to home if the request was through form submit-#
     if request.method == "POST":

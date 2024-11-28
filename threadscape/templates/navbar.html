@@ -9,9 +9,13 @@
 </form>
 
 <!-- Displaying logout button if the user is authenticated -->
- {% if request.user.is_authenticated %}
- <p>Hello {{ request.user }}</p>
- <a href = "{% url 'logout' %}">Logout</a>
+{% if request.user.is_authenticated %}
+<p>Hello {{ request.user }}</p>
+<a href = "{% url 'logout' %}">Logout</a>
+
+<!-- Displaying logout button if the user is authenticated -->
+{% else %}
+<a href = "{% url 'login' %}">Login</a>
 
 <!--Closing the if tag-->
 {% endif %}

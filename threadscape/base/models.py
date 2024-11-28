@@ -21,6 +21,7 @@ class Thread(models.Model):
     topic = models.ForeignKey(Topic, on_delete = models.SET_NULL, null = True)
     name = models.CharField(max_length = 128)
     description = models.TextField(null = True, blank = True)
+    participants = models.ManyToManyField(User, related_name = "participants", blank = True)
     updated = models.DateTimeField(auto_now = True)
     created = models.DateTimeField(auto_now_add = True)
 
@@ -44,6 +45,12 @@ class Message(models.Model):
     body = models.TextField()
     updated = models.DateTimeField(auto_now = True)
     created = models.DateTimeField(auto_now_add = True)
+
+    #-Meta class to define the metadata of the table-#
+    class Meta:
+
+        #-Changing the order of the records displayed-#
+        ordering = ["-updated", "-created"]
 
     #-Function to return the string represenation of the class object-#
     def __str__(self):

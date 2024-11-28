@@ -1,0 +1,49 @@
+/* Style for the main thread container */
+.thread-container{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+/* Style for the message textarea */
+.message-box {
+    width: 100%;
+    min-height: 10px;
+    max-height: 300px;
+    resize: vertical;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* Style for the placeholder text */
+.message-box::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Styling the submit button */
+.submit-button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+/* Adjusting the appearance on focus */
+.message-box:focus {
+    outline: none;
+    border-color: #4CAF50;
+}

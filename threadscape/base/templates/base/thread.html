@@ -1,20 +1,30 @@
 <!--Inheriting the main template-->
 {% extends 'main.html' %}
 
+<!--Loading the static files-->
+{% load static %}
+
 <!--Adding title-->
 {% block title %}{{ thread.name }}{% endblock title %}
 
 <!--block content start-->
 {% block content %}
 
+<!--Importing the static files-->
+<link rel="stylesheet" href="{% static 'base/thread.css' %}">
+<script src="{% static 'base/thread.js' %}"></script>
+
 <!--Main container div start-->
-<div>
+<div class = "thread-container">
+
+    <!-- Thread conversation div start -->
+    <div>
 
     <!-- Thread title and description -->
     <h1>{{ thread.name }}</h1>
     <p>{{ thread.description }}</p>
 
-    <!-- Comment div start -->
+    <!-- Comment wrapper div start -->
     <div class = "comment-wrapper">
 
         <!-- Conversation header -->
@@ -24,11 +34,61 @@
         <!-- Iterating the thread_messages and adding them dynamically -->
         {% for message in thread_messages %}
         <div>
+
+            <!-- Only showing delete to the owner of the message -->
+            {% if request.user == message.user %}
+            <a href = "{% url 'delete-message' message.id%}">Delete</a>
+            {% endif %}
+
+            <!-- Message info and content -->
             <small>@{{ message.user }} {{ message.created|timesince }} ago</small>
             <p>{{ message.body }}</p>
+            <hr>
         </div>
         {% endfor %}
 
+    <!-- Comment wrapper div end -->
+    </div>
+
+    <!-- Only allowing authenticated user to add a message to the thread -->
+    {% if request.user.is_authenticated %}
+
+    <!-- Comment form div start -->
+    <div class = "comment-form">
+
+        <form method = "POST" action = "">
+
+            <!-- CSRF Token -->
+            {% csrf_token %}
+
+            <!-- Textfield to write a message -->
+            <textarea name = "body" placeholder = "Write your message here..." class = "message-box"></textarea>
+            <input type = "submit" value = "Post" class = "submit-button"/>
+
+        </form>
+
+    <!-- Comment form div end -->
+    </div>
+
+    <!--Closing the div and if tag-->
+    {% endif %}
+    </div>
+
+    <!-- Participants div start -->
+    <div>
+
+        <!-- Participants header -->
+        <h3>Participants</h3>
+        <hr>
+
+        <!-- Iterating the participants and adding them dynamically -->
+        {% for participant in participants %}
+        <div>
+            <p>@{{ participant.username }}</p>
+        </div>
+
+        <!--Closing the div and if tag-->
+        {% endfor %}
     </div>
 
 <!--Main container div and block content end-->
