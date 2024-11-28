@@ -10,6 +10,7 @@
 
 <!-- Displaying logout button if the user is authenticated -->
  {% if request.user.is_authenticated %}
+ <p>Hello {{ request.user }}</p>
  <a href = "{% url 'logout' %}">Logout</a>
 
 <!--Closing the if tag-->

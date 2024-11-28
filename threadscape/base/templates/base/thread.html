@@ -10,10 +10,26 @@
 <!--Main container div start-->
 <div>
 
-    <!--Dummy data-->
-    <h2>Thread {{ thread.id }} - {{ thread.name }}</h2>
-    <hr>
-    <h3>{{ thread.description }}</h3>
+    <!-- Thread title and description -->
+    <h1>{{ thread.name }}</h1>
+    <p>{{ thread.description }}</p>
+
+    <!-- Comment div start -->
+    <div class = "comment-wrapper">
+
+        <!-- Conversation header -->
+        <h3>Conversation</h3>
+        <hr>
+
+        <!-- Iterating the thread_messages and adding them dynamically -->
+        {% for message in thread_messages %}
+        <div>
+            <small>@{{ message.user }} {{ message.created|timesince }} ago</small>
+            <p>{{ message.body }}</p>
+        </div>
+        {% endfor %}
+
+    </div>
 
 <!--Main container div and block content end-->
 </div>

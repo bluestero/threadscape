@@ -130,8 +130,12 @@ def thread(request, pk):
     #-Getting the thread using the thread ID-#
     thread = models.Thread.objects.get(id = pk)
 
+    #-Getting the messages for the given thread-#
+    thread_messages = models.Message.objects.filter(thread = pk)
+    thread_messages = thread.message_set.all()
+
     #-Creating the context object to render-#
-    context = {"thread": thread}
+    context = {"thread": thread, "thread_messages": thread_messages}
 
     #-Returning the rendered page-#
     return render(request, "base/thread.html", context)
