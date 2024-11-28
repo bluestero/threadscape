@@ -16,26 +16,9 @@
 <!--Main container div start-->
 <div class = "home-container">
 
-    <!--Topic container start-->
+    <!--Topic component-->
     <div>
-
-        <!--Heading-->
-        <h3>Browse Topics</h3>
-        <hr>
-
-        <!--Link to remove topic filter-->
-        <div>
-            <a href = "{% url 'home' %}">All</a>
-        </div>
-
-        <!--Iterating the topics and adding them dynamically-->
-        {% for topic in topics %}
-        <div>
-            <a href = "{% url 'home' %}?topic={{ topic.name }}">{{ topic.name }}</a>
-        </div>
-        {% endfor %}
-
-    <!--Topic div end-->
+        {% include 'base/topics_component.html' %}
     </div>
 
     <!--Threads div start-->
@@ -47,51 +30,15 @@
         <!--Link to create a new thread-->
         <a  href = "{% url 'create-thread' %}">Create Thread</a>
 
-        <!--Iterating the threads and adding them dynamically-->
-        {% for thread in threads %}
-        <div>
-
-            <!-- Only displaying edit and delete if the user owns the thread -->
-            {% if request.user == thread.host %}
-            <a href="{% url 'update-thread' thread.id %}"><span>Edit</span></a>
-            <a href="{% url 'delete-thread' thread.id %}"><span>Delete</span></a>
-            {% endif %}
-
-            <span>@{{ thread.host.username }}</span>
-            <h5>{{ thread.id }} - <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a></h5>
-            <small>{{ thread.topic.name }}</small>
-            <hr>
-        </div>
-        {% endfor %}
+        <!-- Feed component -->
+        {% include 'base/feed_component.html' %}
 
     <!--Threads div end-->
     </div>
 
-    <!--Recent Activities container start-->
+    <!--Recent Activity component-->
     <div>
-
-        <!--Heading-->
-        <h3>Recent Activities</h3>
-        <hr>
-
-        <!--Iterating the thread messages and adding them dynamically-->
-        {% for message in thread_messages %}
-        <div>
-
-            <!-- Activity content -->
-            <small>@{{ message.user }} {{ message.created|timesince }} ago</small>
-            <small>Replied to post "{{ message.thread }}"</small>
-            <p>{{ message }}</p>
-
-            <!-- Only showing delete to the owner of the message -->
-            {% if request.user == message.user %}
-            <a href = "{% url 'delete-message' message.id%}">Delete</a>
-            {% endif %}
-            <hr>
-        </div>
-        {% endfor %}
-
-    <!--Recent Activities div end-->
+        {% include 'base/activity_component.html' %}
     </div>
     
 

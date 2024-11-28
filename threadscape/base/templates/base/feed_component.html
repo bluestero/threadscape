@@ -1,0 +1,16 @@
+<!--Iterating the threads and adding them dynamically-->
+{% for thread in threads %}
+<div>
+
+    <!-- Only displaying edit and delete if the user owns the thread -->
+    {% if request.user == thread.host %}
+    <a href="{% url 'update-thread' thread.id %}"><span>Edit</span></a>
+    <a href="{% url 'delete-thread' thread.id %}"><span>Delete</span></a>
+    {% endif %}
+
+    <span>@{{ thread.host.username }}</span>
+    <h5>{{ thread.id }} - <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a></h5>
+    <small>{{ thread.topic.name }}</small>
+    <hr>
+</div>
+{% endfor %}

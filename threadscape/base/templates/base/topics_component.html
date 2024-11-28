@@ -1,0 +1,15 @@
+<!--Heading-->
+<h3>Browse Topics</h3>
+<hr>
+
+<!--Link to remove topic filter-->
+<div>
+    <a href = "{% url 'home' %}">All</a>
+</div>
+
+<!--Iterating the topics and adding them dynamically-->
+{% for topic in topics %}
+<div>
+    <a href = "{% url 'home' %}?topic={{ topic.name }}">{{ topic.name }}</a>
+</div>
+{% endfor %}
