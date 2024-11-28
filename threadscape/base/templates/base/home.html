@@ -16,7 +16,7 @@
 <!--Main container div start-->
 <div class = "home-container">
 
-    <!--Side-bar container-->
+    <!--Topic container start-->
     <div>
 
         <!--Heading-->
@@ -35,14 +35,14 @@
         </div>
         {% endfor %}
 
-    <!--End of Side-bar div-->
+    <!--Topic div end-->
     </div>
 
     <!--Threads div start-->
     <div>
 
-        <!--Room count-->
-        <h5>{{ room_count }} rooms available.</h5>
+        <!--Thread count-->
+        <h5>{{ thread_count }} threads available.</h5>
 
         <!--Link to create a new thread-->
         <a  href = "{% url 'create-thread' %}">Create Thread</a>
@@ -66,6 +66,34 @@
 
     <!--Threads div end-->
     </div>
+
+    <!--Recent Activities container start-->
+    <div>
+
+        <!--Heading-->
+        <h3>Recent Activities</h3>
+        <hr>
+
+        <!--Iterating the thread messages and adding them dynamically-->
+        {% for message in thread_messages %}
+        <div>
+
+            <!-- Activity content -->
+            <small>@{{ message.user }} {{ message.created|timesince }} ago</small>
+            <small>Replied to post "{{ message.thread }}"</small>
+            <p>{{ message }}</p>
+
+            <!-- Only showing delete to the owner of the message -->
+            {% if request.user == message.user %}
+            <a href = "{% url 'delete-message' message.id%}">Delete</a>
+            {% endif %}
+            <hr>
+        </div>
+        {% endfor %}
+
+    <!--Recent Activities div end-->
+    </div>
+    
 
 <!--Main container div and block content end-->
 </div>

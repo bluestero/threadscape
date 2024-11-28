@@ -116,8 +116,12 @@ def home(request):
         Q(description__icontains = topic)
     )
 
+    #-Fetching the messages-#
+    thread_messages = models.Message.objects.filter(Q(thread__topic__name__icontains = topic))
+    print(thread_messages)
+
     #-Creating the context object to render-#
-    context = {"threads": threads, "topics": topics, "room_count": threads.count()}
+    context = {"threads": threads, "topics": topics, "thread_count": threads.count(), "thread_messages": thread_messages}
 
     #-Returning the rendered page-#
     return render(request, "base/home.html", context)
@@ -170,6 +174,7 @@ def delete_message(request, pk):
     #-Deleting the record and redirecting to home if the request was through form submit-#
     if request.method == "POST":
         message.delete()
+        return redirect("home")
         return redirect("thread", pk = thread_id)
 
     #-Creating the context object to render-#
