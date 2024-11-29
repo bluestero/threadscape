@@ -1,11 +1,13 @@
+// Function to adjust textarea height dynamically
+function autoResizeTextarea(event) {
+    const textarea = event.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+}
+
+// Attach event listeners after DOM content is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // Attach auto-resize listener to textareas with class 'message-box'
+    document.querySelector('.message-box').addEventListener('input', autoResizeTextarea);
 
-    // Getting the message-box.
-    const messageBox = document.querySelector('.message-box');
-
-    // Make it adjust the box heigh according to the input lines.
-    messageBox.addEventListener('input', function () {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    });
 });

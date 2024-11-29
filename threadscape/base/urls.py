@@ -13,5 +13,6 @@ urlpatterns = [
     path("create-thread/", views.create_thread, name = "create-thread"),
     path("update-thread/<str:pk>/", views.update_thread, name = "update-thread"),
     path("delete-thread/<str:pk>/", views.delete_thread, name = "delete-thread"),
+    path("update-message/<str:pk>/", views.update_message, name = "update-message"),
     path("delete-message/<str:pk>/", views.delete_message, name = "delete-message"),
 ]

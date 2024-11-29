@@ -2,10 +2,10 @@ from . import models, forms
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 #-Function to render the login page-#
@@ -118,7 +118,6 @@ def home(request: HttpRequest):
 
     #-Fetching the messages-#
     thread_messages = models.Message.objects.filter(Q(thread__topic__name__icontains = topic))
-    print(thread_messages)
 
     #-Creating the context object to render-#
     context = {"threads": threads, "topics": topics, "thread_count": threads.count(), "thread_messages": thread_messages}
@@ -131,7 +130,7 @@ def home(request: HttpRequest):
 def thread(request: HttpRequest, pk: str):
 
     #-Getting the thread using the thread ID-#
-    thread = models.Thread.objects.get(id = pk)
+    thread = get_object_or_404(models.Thread, id = pk)
 
     #-Getting the messages for the given thread-#
     thread_messages = models.Message.objects.filter(thread = pk)
@@ -167,10 +166,17 @@ def thread(request: HttpRequest, pk: str):
 def profile(request: HttpRequest, pk: str):
 
     #-Getting the user data from the id-#
-    user = models.User.objects.get(id = pk)
+    user = get_object_or_404(models.User, id = pk)
+
+    #-Fetching all the thread and topic records-#
+    topics = models.Topic.objects.filter()
+    threads = user.thread_set.all()
+
+    #-Fetching the messages-#
+    thread_messages = user.message_set.all()
 
     #-Creating the context object to render-#
-    context = {"user": user}
+    context = {"user": user, "threads": threads, "topics": topics, "thread_count": threads.count(), "thread_messages": thread_messages}
 
     #-Returning the rendered page-#
     return render(request, "base/profile.html", context)
@@ -178,10 +184,31 @@ def profile(request: HttpRequest, pk: str):
 
 #-Function to delete a message from a thread-#
 @login_required(login_url = "login")
+def update_message(request: HttpRequest, pk: str):
+
+    #-Getting the message for the given id-#
+    message = get_object_or_404(models.Message, id = pk)
+    thread_id = message.thread.id
+
+    #-Deleting the record and redirecting to home if the request was through form submit-#
+    if request.method == "POST":
+        message.delete()
+        return redirect("home")
+        return redirect("thread", pk = thread_id)
+
+    #-Creating the context object to render-#
+    context = {"object": message}
+
+    #-Returning the rendered page-#
+    return render(request, "base/delete.html", context)
+
+
+#-Function to delete a message from a thread-#
+@login_required(login_url = "login")
 def delete_message(request: HttpRequest, pk: str):
 
     #-Getting the message for the given id-#
-    message = models.Message.objects.get(id = pk)
+    message = get_object_or_404(models.Message, id = pk)
     thread_id = message.thread.id
 
     #-Deleting the record and redirecting to home if the request was through form submit-#
@@ -201,7 +228,7 @@ def delete_message(request: HttpRequest, pk: str):
 def topic(request: HttpRequest, pk: str):
 
     #-Getting the topic from the id and threads based on the topic id-#
-    topic = models.Topic.objects.get(id = pk)
+    topic = get_object_or_404(models.Topic, id = pk)
     threads = models.Thread.objects.filter(topic = topic)
 
     #-Creating the context object to render-#
@@ -241,7 +268,7 @@ def create_thread(request: HttpRequest):
 def update_thread(request: HttpRequest, pk: str):
 
     #-Getting the thread from the ID and filling the form with it-#
-    thread = models.Thread.objects.get(id = pk)
+    thread = get_object_or_404(models.Thread, id = pk)
     form = forms.ThreadForm(instance = thread)
 
     #-Checking if method is POST, meaning form was submitted-#
@@ -267,7 +294,7 @@ def update_thread(request: HttpRequest, pk: str):
 def delete_thread(request: HttpRequest, pk: str):
 
     #-Getting the thread for the given id-#
-    thread = models.Thread.objects.get(id = pk)
+    thread = get_object_or_404(models.Thread, id = pk)
 
     #-Deleting the record and redirecting to home if the request was through form submit-#
     if request.method == "POST":

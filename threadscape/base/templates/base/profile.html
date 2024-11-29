@@ -10,10 +10,36 @@
 <!--block content start-->
 {% block content %}
 
-<!--Main container div start-->
-<div class = "thread-container">
+<!--Importing the static files-->
+<link rel="stylesheet" href="{% static 'base/profile.css' %}">
 
-    <h1>{{ user.username }}</h1>
+<!--Main container div start-->
+<div class = "profile-container">
+
+    <!--Topic component-->
+    <div>
+        {% include 'base/topics_component.html' %}
+    </div>
+
+    <!--Threads div start-->
+    <div>
+
+        <!-- User details -->
+        <h1>@{{ user.username }}</h1>
+
+        <!--Thread count-->
+        <h5>{{ thread_count }} user threads.</h5>
+
+        <!-- Feed component -->
+        {% include 'base/feed_component.html' %}
+
+    <!--Threads div end-->
+    </div>
+
+    <!--Recent Activity component-->
+    <div>
+        {% include 'base/activity_component.html' %}
+    </div>
 
 <!--Main container div and block content end-->
 </div>
