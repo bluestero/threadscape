@@ -2,11 +2,15 @@
 <!DOCTYPE html>
 <html>
 
+<!--Loading the static files-->
+{% load static %}
+
 <!--Header and other imports-->
 <head>
     <meta charset='utf-8'>
     <link rel="shortcut icon" href="#">
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <title>{% block title %}Default Title{% endblock title %}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 </head>
