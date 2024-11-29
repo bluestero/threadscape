@@ -8,7 +8,7 @@
     <a href="{% url 'delete-thread' thread.id %}"><span>Delete</span></a>
     {% endif %}
 
-    <span>@{{ thread.host.username }}</span>
+    <a href = "{% url 'profile' thread.host.id %}">@{{ thread.host.username }}</a>
     <h5>{{ thread.id }} - <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a></h5>
     <small>{{ thread.topic.name }}</small>
     <hr>

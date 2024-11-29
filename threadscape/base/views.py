@@ -1,7 +1,7 @@
 from . import models, forms
 from django.db.models import Q
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 #-Function to render the login page-#
-def login_page(request):
+def login_page(request: HttpRequest):
 
     #-Base object-#
     page = "login"
@@ -56,7 +56,7 @@ def login_page(request):
 
 
 #-Function to logout the user-#
-def logout_user(request):
+def logout_user(request: HttpRequest):
 
     #-Logging out the user and redirecting to the home page-#
     logout(request)
@@ -64,7 +64,7 @@ def logout_user(request):
 
 
 #-Function to render the login page but for registration-#
-def register_page(request):
+def register_page(request: HttpRequest):
 
     #-Creating the registration form object from the User model-#
     form = UserCreationForm()
@@ -103,7 +103,7 @@ def register_page(request):
 
 
 #-Function to render the homepage-#
-def home(request):
+def home(request: HttpRequest):
 
     #-Getting the topic filter if given else using star-#
     topic = request.GET.get("topic", "")
@@ -128,7 +128,7 @@ def home(request):
 
 
 #-Function to render the selected thread-#
-def thread(request, pk):
+def thread(request: HttpRequest, pk: str):
 
     #-Getting the thread using the thread ID-#
     thread = models.Thread.objects.get(id = pk)
@@ -163,9 +163,22 @@ def thread(request, pk):
     return render(request, "base/thread.html", context)
 
 
+#-Function to render the selected user profile-#
+def profile(request: HttpRequest, pk: str):
+
+    #-Getting the user data from the id-#
+    user = models.User.objects.get(id = pk)
+
+    #-Creating the context object to render-#
+    context = {"user": user}
+
+    #-Returning the rendered page-#
+    return render(request, "base/profile.html", context)
+
+
 #-Function to delete a message from a thread-#
 @login_required(login_url = "login")
-def delete_message(request, pk):
+def delete_message(request: HttpRequest, pk: str):
 
     #-Getting the message for the given id-#
     message = models.Message.objects.get(id = pk)
@@ -185,7 +198,7 @@ def delete_message(request, pk):
 
 
 #-Function to render threads with the selected topic-#
-def topic(request, pk):
+def topic(request: HttpRequest, pk: str):
 
     #-Getting the topic from the id and threads based on the topic id-#
     topic = models.Topic.objects.get(id = pk)
@@ -200,7 +213,7 @@ def topic(request, pk):
 
 #-Function to render the thread creation page or create thread-#
 @login_required(login_url = "login")
-def create_thread(request):
+def create_thread(request: HttpRequest):
 
     #-Creating the form object-#
     form = forms.ThreadForm()
@@ -225,7 +238,7 @@ def create_thread(request):
 
 #-Function to update the thread details-#
 @login_required(login_url = "login")
-def update_thread(request, pk):
+def update_thread(request: HttpRequest, pk: str):
 
     #-Getting the thread from the ID and filling the form with it-#
     thread = models.Thread.objects.get(id = pk)
@@ -251,7 +264,7 @@ def update_thread(request, pk):
 
 #-Function to delete the selected thread-#
 @login_required(login_url = "login")
-def delete_thread(request, pk):
+def delete_thread(request: HttpRequest, pk: str):
 
     #-Getting the thread for the given id-#
     thread = models.Thread.objects.get(id = pk)

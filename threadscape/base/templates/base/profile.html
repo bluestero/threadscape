@@ -1,0 +1,20 @@
+<!--Inheriting the main template-->
+{% extends 'main.html' %}
+
+<!--Loading the static files-->
+{% load static %}
+
+<!--Adding title-->
+{% block title %}{{ thread.name }}{% endblock title %}
+
+<!--block content start-->
+{% block content %}
+
+<!--Main container div start-->
+<div class = "thread-container">
+
+    <h1>{{ user.username }}</h1>
+
+<!--Main container div and block content end-->
+</div>
+{% endblock content %}
