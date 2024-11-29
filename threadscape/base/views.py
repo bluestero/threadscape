@@ -251,9 +251,17 @@ def create_thread(request: HttpRequest):
         #-Filling the form object using the submitted data-#
         form = forms.ThreadForm(request.POST)
 
-        #-Saving the data to the model if valid and redirecting to the homepage-#
+        #-Checking if the form is valid-#
         if form.is_valid():
-            form.save()
+
+            #-Getting the thread instance without committing it to the database-#
+            thread = form.save(commit = False)
+
+            #-Adding the host to the thread before saving it-#
+            thread.host = request.user
+            thread.save()
+
+            #-Redirecting to the homepage-#
             return redirect("home")
 
     #-Creating the context object to render-#

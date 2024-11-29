@@ -7,6 +7,6 @@ class ThreadForm(ModelForm):
 
     #-Meta class to define the model and fields to show-#
     class Meta:
-        model = models.Thread
-        fields = ["name", "description", "topic"]
         fields = "__all__"
+        model = models.Thread
+        exclude = ["host", "participants"]
