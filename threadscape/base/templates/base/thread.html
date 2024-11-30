@@ -7,13 +7,16 @@
 <!--block content start-->
 {% block content %}
 
+<!-- Main start -->
 <main class="profile-page layout layout--2">
+  <!-- Container div start -->
   <div class="container">
-    <!-- Thread Start -->
+    <!-- Thread div start -->
     <div class="thread">
       <div class="thread__top">
+        <!-- Back button -->
         <div class="thread__topLeft">
-          <a href="index.html">
+          <a href="{% url 'home' %}">
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -25,11 +28,16 @@
                 d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"></path>
             </svg>
           </a>
-          <h3>Study Thread</h3>
+          <h3>Threadscape</h3>
         </div>
 
+        <!-- Only allowing the thread owner to edit and delete the thread -->
+        {% if request.user == thread.host %}
+
+        <!-- Updating div -->
         <div class="thread__topRight">
-          <a href="#">
+          <!-- Edit button -->
+          <a href="{% url 'update-thread' thread.id %}">
             <svg
               enable-background="new 0 0 24 24"
               height="32"
@@ -53,7 +61,9 @@
               </g>
             </svg>
           </a>
-          <a href="#">
+
+          <!-- Delete button -->
+          <a href="{% url 'delete-thread' thread.id %}">
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -67,48 +77,40 @@
           </a>
         </div>
 
-        <!-- <button class="action-button" data-id="120" data-delete-url="https://randomuser.me/api/3324923"
-        data-edit-url="profile.html">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-          <title>ellipsis-horizontal</title>
-          <path
-            d="M16 7.843c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 1.98c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z">
-          </path>
-          <path
-            d="M16 19.908c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 14.046c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z">
-          </path>
-          <path
-            d="M16 31.974c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 26.111c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z">
-          </path>
-        </svg>
-      </button> -->
+        <!-- If statemement end -->
+        {% endif %}
       </div>
+
+      <!-- Thread div -->
       <div class="thread__box scroll">
+        <!-- Thread info div -->
         <div class="thread__header scroll">
           <div class="thread__info">
-            <h3>100 Days of Code Challenge</h3>
-            <span>3 days ago</span>
+            <h3>{{ thread.name }}</h3>
+            <span>{{ thread.created|timesince }} ago</span>
           </div>
           <div class="thread__hosted">
             <p>Hosted By</p>
-            <a href="#" class="thread__author">
+            <a href="{% url 'profile' thread.host.id %}" class="thread__author">
               <div class="avatar avatar--small">
                 <img src="https://randomuser.me/api/portraits/men/37.jpg" />
               </div>
-              <span>@dennis_ivy</span>
+              <span>@{{ thread.host.username }}</span>
             </a>
           </div>
-          <div class="thread__details">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,
-            tenetur laudantium? Dicta repellendus rerum consectetur, voluptatem
-            repudiandae eum ea porro cupiditate provident nulla, deserunt, ab
-            ipsum corporis laboriosam deleniti molestias?
-          </div>
-          <span class="thread__topics">JavaScript</span>
+          <div class="thread__details">{{ thread.description }}</div>
+          <span class="thread__topics">{{ thread.topic }}</span>
         </div>
+
+        <!-- Thread conversation div -->
         <div class="thread__conversation">
           <div class="discussions scroll">
+            <!--Iterating the messages and adding them dynamically-->
+            {% for message in thread_messages %}
+
+            <!-- Message div -->
             <div class="discussion">
+              <!-- Message author details -->
               <div class="discussion__top">
                 <div class="discussion__author">
                   <a href="#" class="discussion__authorInfo">
@@ -116,128 +118,38 @@
                       <img
                         src="https://randomuser.me/api/portraits/men/37.jpg" />
                     </div>
-                    <span>@dennis_ivy</span>
+                    <span>@{{ message.user }}</span>
                   </a>
-                  <span class="discussion__date">3 day ago</span>
+                  <span class="discussion__date"
+                    >{{ message.created|timesince }} ago</span
+                  >
                 </div>
+
+                <!-- Message delete button only to the owner of the message -->
+                {% if request.user == message.user %}
                 <div class="discussion__delete">
-                  <svg
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32">
-                    <title>remove</title>
-                    <path
-                      d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="discussion__details">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                nobis, deserunt cum quibusdam aliquam nihil unde et impedit,
-                quaerat! Corporis praesentium aspernatur autem laboriosam natus
-                similique, adipisci nam maxime.
-              </div>
-            </div>
-            <div class="discussion">
-              <div class="discussion__top">
-                <div class="discussion__author">
-                  <a href="#" class="discussion__authorInfo">
-                    <div class="avatar avatar--small">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/37.jpg" />
-                    </div>
-                    <span>@dennis_ivy</span>
+                  <a href="{% url 'delete-message' message.id %}">
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32">
+                      <title>remove</title>
+                      <path
+                        d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
+                    </svg>
                   </a>
-                  <span class="discussion__date">3 day ago</span>
                 </div>
-                <div class="discussion__delete">
-                  <svg
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32">
-                    <title>remove</title>
-                    <path
-                      d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
-                  </svg>
-                </div>
+                {% endif %}
               </div>
-              <div class="discussion__details">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                nobis, deserunt cum quibusdam aliquam nihil unde et impedit,
-                sequi, modi quos porro iure enim suscipit itaque earum tenetur
-                praesentium quaerat! Corporis praesentium aspernatur autem
-                laboriosam natus similique, adipisci nam maxime.
-              </div>
+
+              <!-- Message content -->
+              <div class="discussion__details">{{ message.body }}</div>
             </div>
-            <div class="discussion">
-              <div class="discussion__top">
-                <div class="discussion__author">
-                  <a href="#" class="discussion__authorInfo">
-                    <div class="avatar avatar--small">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/37.jpg" />
-                    </div>
-                    <span>@dennis_ivy</span>
-                  </a>
-                  <span class="discussion__date">3 day ago</span>
-                </div>
-                <div class="discussion__delete">
-                  <svg
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32">
-                    <title>remove</title>
-                    <path
-                      d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="discussion__details">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                nobis, deserunt cum quibusdam aliquam nihil unde et impedit,
-                sequi, modi quos porro iure enim suscipit itaque earum tenetur
-                praesentium quaerat! Corporis praesentium aspernatur autem
-                laboriosam natus similique, adipisci nam maxime.
-              </div>
-            </div>
-            <div class="discussion">
-              <div class="discussion__top">
-                <div class="discussion__author">
-                  <a href="#" class="discussion__authorInfo">
-                    <div class="avatar avatar--small">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/37.jpg" />
-                    </div>
-                    <span>@dennis_ivy</span>
-                  </a>
-                  <span class="discussion__date">3 day ago</span>
-                </div>
-                <div class="discussion__delete">
-                  <svg
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32">
-                    <title>remove</title>
-                    <path
-                      d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="discussion__details">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                nobis, deserunt cum quibusdam aliquam nihil unde et impedit,
-                sequi, modi quos porro iure enim suscipit itaque earum tenetur
-                praesentium.
-              </div>
-            </div>
+
+            <!-- For loop end -->
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -247,168 +159,30 @@
         </form>
       </div>
     </div>
-    <!-- Thread End -->
+    <!-- Thread div end -->
 
-    <!--   Start -->
+    <!-- Participants div start -->
     <div class="participants">
       <h3 class="participants__top">Participants <span>(5.3k Joined)</span></h3>
       <div class="participants__list scroll">
-        <a href="profile.html" class="participant">
+        <!--Iterating the participants and adding them dynamically-->
+        {% for participant in participants %}
+
+        <a href="{% url 'profile' participant.id %}" class="participant">
           <div class="avatar avatar--medium">
             <img src="https://randomuser.me/api/portraits/men/37.jpg" />
           </div>
           <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
+            {{ participant.username }}
+            <span>@{{ participant.username }}</span>
           </p>
         </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
-        <a href="profile.html" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
-          </div>
-          <p>
-            Dennis Ivy
-            <span>@dennis_ivy</span>
-          </p>
-        </a>
+
+        <!-- For loop end -->
+        {% endfor %}
       </div>
     </div>
-    <!--  End -->
+    <!-- Participants div end -->
   </div>
 </main>
 <!-- Main end -->
