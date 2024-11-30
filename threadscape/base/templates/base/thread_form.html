@@ -9,20 +9,18 @@
 
 <!--Main container div start-->
 <div>
+  <!--Form for creating a thread-->
+  <form method="POST" , action="">
+    <!-- CSRF Token -->
+    {% csrf_token %}
 
-    <!--Form for creating a thread-->
-    <form method = "POST", action = "">
+    <!-- Rendering the ThreadForm object -->
+    {{ form.as_p }}
 
-        <!-- CSRF Token -->
-        {% csrf_token %}
+    <!-- Submit button to create / update -->
+    <input type="submit" value="Submit" />
+  </form>
 
-        <!-- Rendering the ThreadForm object -->
-        {{ form.as_p }}
-
-        <!-- Submit button to create / update -->
-        <input type = "submit" value = "Submit" />
-    </form>
-
-<!--Main container div and block content end-->
+  <!--Main container div and block content end-->
 </div>
 {% endblock content %}

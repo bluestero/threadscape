@@ -116,11 +116,19 @@ def home(request: HttpRequest):
         Q(description__icontains = topic)
     )
 
+    #-Fetching only the thread count without filters-#
+    total_thread_count = models.Thread.objects.count()
+
     #-Fetching the messages-#
     thread_messages = models.Message.objects.filter(Q(thread__topic__name__icontains = topic))
 
     #-Creating the context object to render-#
-    context = {"threads": threads, "topics": topics, "thread_count": threads.count(), "thread_messages": thread_messages}
+    context = {
+        "topics": topics,
+        "threads": threads,
+        "thread_count": threads.count(),
+        "thread_messages": thread_messages,
+        "total_thread_count": total_thread_count}
 
     #-Returning the rendered page-#
     return render(request, "base/home.html", context)

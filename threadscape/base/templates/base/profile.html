@@ -1,40 +1,69 @@
 <!--Inheriting the main template-->
 {% extends 'main.html' %}
 
-<!--Loading the static files-->
-{% load static %}
-
 <!--Adding title-->
-{% block title %}{{ thread.name }}{% endblock title %}
+{% block title %}{{ request.user }}'s Profile{% endblock title %}
 
 <!--block content start-->
 {% block content %}
 
-<!--Importing the static files-->
-<link rel="stylesheet" href="{% static 'base/profile.css' %}" />
+<!-- Main start -->
+<main class="profile-page layout layout--3">
+  <!-- Container div start -->
+  <div class="container">
+    <!--Topic component-->
+    {% include 'base/topics_component.html' %}
 
-<!--Main container div start-->
-<div class="profile-container">
-  <!--Topic component-->
-  <div>{% include 'base/topics_component.html' %}</div>
+    <!-- Thread List Start -->
+    <div class="threadList">
+      <!-- Profile div start -->
+      <div class="profile">
+        <!-- Profile avatar -->
+        <div class="profile__avatar">
+          <div class="avatar avatar--large active">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" />
+          </div>
+        </div>
 
-  <!--Threads div start-->
-  <div>
-    <!-- User details -->
-    <h1>@{{ user.username }}</h1>
+        <!-- Profile Name and Edit -->
+        <div class="profile__info">
+          <h3>{{ request.user }}</h3>
+          <p>@{{ request.user }}</p>
+          <a href="edit-user.html" class="btn btn--main btn--pill"
+            >Edit Profile
+          </a>
+        </div>
 
-    <!--Thread count-->
-    <h5>{{ thread_count }} user threads.</h5>
+        <!-- Profile about -->
+        <div class="profile__about">
+          <h3>About</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Consequuntur illo tenetur facilis sunt nemo debitis quisquam hic
+            atque aut? Ducimus alias placeat optio accusamus repudiandae quis ab
+            ex exercitationem rem?
+          </p>
+        </div>
+      </div>
+      <!-- Profile div end -->
 
-    <!-- Feed component -->
-    {% include 'base/feed_component.html' %}
+      <!-- Threads header div start -->
+      <div class="threadList__header">
+        <div>
+          <h2>Study Threads Hosted by {{ request.user }}</h2>
+        </div>
+      </div>
 
-    <!--Threads div end-->
+      <!-- Feed component -->
+      {% include 'base/feed_component.html' %}
+    </div>
+    <!-- Thread List End -->
+
+    <!--Recent Activity component-->
+    {% include 'base/activity_component.html' %}
   </div>
+</main>
+<!-- Main end -->
 
-  <!--Recent Activity component-->
-  <div>{% include 'base/activity_component.html' %}</div>
-
-  <!--Main container div and block content end-->
-</div>
+<!--Block content end-->
 {% endblock content %}

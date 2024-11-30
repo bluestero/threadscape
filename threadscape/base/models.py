@@ -54,4 +54,4 @@ class Message(models.Model):
 
     #-Function to return the string represenation of the class object-#
     def __str__(self):
-        return self.body[:50]
+        return self.body[:50] + " . . ." if len(self.body) > 50 else self.body[:50]
