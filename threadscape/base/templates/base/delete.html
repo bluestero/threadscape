@@ -9,15 +9,14 @@
 
 <!--block content start-->
 <div>
+  <!--Form for confirming deletion-->
+  <form method="POST" action="">
+    {% csrf_token %}
+    <p>Are you sure you want to delete '{{ object }}'</p>
+    <a href="{{ request.META.HTTP_REFERER }}">Go back</a>
+    <input type="submit" value="confirm" />
+  </form>
 
-    <!--Form for confirming deletion-->
-    <form method = "POST" action = "">
-        {% csrf_token %}
-        <p>Are you sure you want to delete '{{ object }}'</p>
-        <a href = "{{ request.META.HTTP_REFERER }}">Go back</a>
-        <input type = "submit" value = "confirm" />
-    </form>
-
-<!--Main container div and block content end-->
+  <!--Main container div and block content end-->
 </div>
 {% endblock content %}

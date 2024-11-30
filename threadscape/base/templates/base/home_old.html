@@ -5,26 +5,26 @@
 {% load static %}
 
 <!--Adding title-->
-{% block title %}{{ thread.name }}{% endblock title %}
+{% block title %}Threadscape{% endblock title %}
 
 <!--block content start-->
 {% block content %}
 
 <!--Importing the static files-->
-<link rel="stylesheet" href="{% static 'base/profile.css' %}" />
+<link rel="stylesheet" href="{% static 'base/home.css' %}" />
 
 <!--Main container div start-->
-<div class="profile-container">
+<div class="home-container">
   <!--Topic component-->
   <div>{% include 'base/topics_component.html' %}</div>
 
   <!--Threads div start-->
   <div>
-    <!-- User details -->
-    <h1>@{{ user.username }}</h1>
-
     <!--Thread count-->
-    <h5>{{ thread_count }} user threads.</h5>
+    <h5>{{ thread_count }} threads available.</h5>
+
+    <!--Link to create a new thread-->
+    <a href="{% url 'create-thread' %}">Create Thread</a>
 
     <!-- Feed component -->
     {% include 'base/feed_component.html' %}

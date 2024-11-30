@@ -1,22 +1,24 @@
 <!--Heading-->
 <h3>Recent Activity</h3>
-<hr>
+<hr />
 
 <!--Iterating the thread messages and adding them dynamically-->
 {% for message in thread_messages %}
 <div>
+  <!-- Activity content -->
+  <small
+    ><a href="{% url 'profile' message.user.id %}">@{{ message.user }}</a> {{
+    message.created|timesince }} ago</small
+  >
+  <small>Replied to post "{{ message.thread }}"</small>
+  <p>{{ message }}</p>
 
-    <!-- Activity content -->
-    <small><a href = "{% url 'profile' message.user.id %}">@{{ message.user }}</a> {{ message.created|timesince }} ago</small>
-    <small>Replied to post "{{ message.thread }}"</small>
-    <p>{{ message }}</p>
+  <!-- Only showing delete to the owner of the message -->
+  {% if request.user == message.user %}
+  <a href="{% url 'delete-message' message.id%}">Delete</a>
+  {% endif %}
+  <hr />
 
-    <!-- Only showing delete to the owner of the message -->
-    {% if request.user == message.user %}
-    <a href = "{% url 'delete-message' message.id%}">Delete</a>
-    {% endif %}
-    <hr>
-
-<!-- Div and for loop end -->
+  <!-- Div and for loop end -->
 </div>
 {% endfor %}
