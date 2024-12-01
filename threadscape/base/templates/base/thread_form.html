@@ -2,25 +2,116 @@
 {% extends 'main.html' %}
 
 <!--Adding title-->
-{% block title %}Create Thread{% endblock title %}
+{% block title %}{{ mode }} Thread{% endblock title %}
 
 <!--block content start-->
 {% block content %}
 
-<!--Main container div start-->
-<div>
-  <!--Form for creating a thread-->
-  <form method="POST" , action="">
-    <!-- CSRF Token -->
-    {% csrf_token %}
+<!-- Main start -->
+<main class="create-thread layout">
+  <!-- Container div start -->
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <a href="{% url 'home' %}">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32">
+              <title>arrow-left</title>
+              <path
+                d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"></path>
+            </svg>
+          </a>
+          <h3>{{ mode }} Thread</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <!-- Form start -->
+        <form method="post" class="form" action="">
+          <!-- CSRF Token -->
+          {% csrf_token %}
 
-    <!-- Rendering the ThreadForm object -->
-    {{ form.as_p }}
+          <!-- Topic field -->
+          <div class="form__group">
+            <label for="thread_topic">Enter Topic</label>
+            <input
+              name="topic"
+              required="text"
+              list="topic-list"
+              autocomplete="off"
+              value="{{ thread.topic.name }}" />
+            <datalist id="topic-list">
+              <select id="thread_topic">
+                <!--Iterating the topics and adding them dynamically-->
+                {% for topic in topics %}
+                <option value="{{ topic.name }}">{{ topic.name }}</option>
+                {% endfor %}
+              </select>
+            </datalist>
+          </div>
 
-    <!-- Submit button to create / update -->
-    <input type="submit" value="Submit" />
-  </form>
+          <!-- Name field -->
+          <div class="form__group">
+            <label for="thread_name">Name</label>
+            {{ form.name }}
+          </div>
 
-  <!--Main container div and block content end-->
-</div>
+          <!-- Description field -->
+          <div class="form__group">
+            <label for="thread_description"> Description</label>
+            {{ form.description }}
+          </div>
+
+          <!-- <input
+              id="thread_name"
+              name="thread_name"
+              type="text"
+              placeholder="E.g. Mastering Python + Django" /> -->
+
+          <!-- Topic field -->
+          <!-- <div class="form__group">
+            <label for="thread_topic">Topic</label>
+            <input
+              required
+              type="text"
+              name="topic"
+              id="thread_topic"
+              list="topic-list" />
+            <datalist id="topic-list">
+              <select id="thread_topic">
+                <option value="">Select your topic</option>
+                <option value="Python">Python</option>
+                <option value="Django">Django</option>
+              </select>
+            </datalist>
+          </div> -->
+
+          <!-- About field -->
+          <!-- <div class="form__group">
+            <label for="thread_about">About</label>
+            <textarea
+              name="thread_about"
+              id="thread_about"
+              placeholder="Write about your study group..."></textarea>
+          </div> -->
+
+          <!-- Cancel and Create / Update Thread buttons -->
+          <div class="form__action">
+            <a class="btn btn--dark" href="{% url 'home' %}"> Cancel </a>
+            <button class="btn btn--main" type="submit">
+              {{ mode }} Thread
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Main end -->
+
+<!--Block content end-->
 {% endblock content %}

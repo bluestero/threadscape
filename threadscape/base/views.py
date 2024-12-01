@@ -250,30 +250,32 @@ def topic(request: HttpRequest, pk: str):
 @login_required(login_url = "login")
 def create_thread(request: HttpRequest):
 
-    #-Creating the form object-#
+    #-Creating the form and topics object-#
     form = forms.ThreadForm()
+    topics = models.Topic.objects.all()
 
     #-Checking if method is POST, meaning form was submitted-#
     if request.method == "POST":
 
-        #-Filling the form object using the submitted data-#
-        form = forms.ThreadForm(request.POST)
+        #-Getting the topic name-#
+        topic_name = request.POST.get("topic")
 
-        #-Checking if the form is valid-#
-        if form.is_valid():
+        #-Getting the topic from the name if exist else creating and fetching it-#
+        topic, _ = models.Topic.objects.get_or_create(name = topic_name)
 
-            #-Getting the thread instance without committing it to the database-#
-            thread = form.save(commit = False)
+        #-Adding the new form data to the Thread model-#
+        models.Thread.objects.create(
+            topic = topic,
+            host = request.user,
+            name = request.POST.get("name"),
+            description = request.POST.get("description"),
+        )
 
-            #-Adding the host to the thread before saving it-#
-            thread.host = request.user
-            thread.save()
-
-            #-Redirecting to the homepage-#
-            return redirect("home")
+        #-Redirecting to the homepage-#
+        return redirect("home")
 
     #-Creating the context object to render-#
-    context = {"form": form}
+    context = {"form": form, "topics": topics, "mode": "Create"}
 
     #-Returning the rendered page-#
     return render(request, "base/thread_form.html", context)
@@ -287,19 +289,31 @@ def update_thread(request: HttpRequest, pk: str):
     thread = get_object_or_404(models.Thread, id = pk)
     form = forms.ThreadForm(instance = thread)
 
+    #-Creating the topics object-#
+    topics = models.Topic.objects.all()
+
     #-Checking if method is POST, meaning form was submitted-#
     if request.method == "POST":
 
-        #-Filling the form object using the submitted data and linking to the thread instance-#
-        form = forms.ThreadForm(request.POST, instance = thread)
+        #-Getting the topic name-#
+        topic_name = request.POST.get("topic")
 
-        #-Saving the data to the model if valid and redirecting to the homepage-#
-        if form.is_valid():
-            form.save()
-            return redirect("home")
+        #-Getting the topic from the name if exist else creating and fetching it-#
+        topic, _ = models.Topic.objects.get_or_create(name = topic_name)
+
+        #-Adding the form data to the thread instance-#
+        thread.topic = topic
+        thread.name = request.POST.get("name")
+        thread.description = request.POST.get("description")
+
+        #-Saving the updated data to the thread instance-#
+        thread.save()
+
+        #-Redirecting to the homepage-#
+        return redirect("home")
 
     #-Creating the context object to render-#
-    context = {"form": form}
+    context = {"form": form, "topics": topics, "thread": thread, "mode": "Update"}
 
     #-Returning the rendered page-#
     return render(request, "base/thread_form.html", context)
