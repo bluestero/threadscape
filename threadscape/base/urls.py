@@ -11,6 +11,7 @@ urlpatterns = [
     path("thread/<str:pk>/", views.thread, name = "thread"),
     path("profile/<str:pk>/", views.profile, name = "profile"),
     path("create-thread/", views.create_thread, name = "create-thread"),
+    path("update-profile/", views.update_profile, name = "update-profile"),
     path("update-thread/<str:pk>/", views.update_thread, name = "update-thread"),
     path("delete-thread/<str:pk>/", views.delete_thread, name = "delete-thread"),
     path("delete-message/<str:pk>/", views.delete_message, name = "delete-message"),

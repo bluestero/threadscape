@@ -9,7 +9,6 @@
 
 <!-- Main start -->
 <main class="create-thread layout">
-  <!-- Container div start -->
   <div class="container">
     <div class="layout__box">
       <div class="layout__boxHeader">
@@ -66,42 +65,11 @@
             {{ form.description }}
           </div>
 
-          <!-- <input
-              id="thread_name"
-              name="thread_name"
-              type="text"
-              placeholder="E.g. Mastering Python + Django" /> -->
-
-          <!-- Topic field -->
-          <!-- <div class="form__group">
-            <label for="thread_topic">Topic</label>
-            <input
-              required
-              type="text"
-              name="topic"
-              id="thread_topic"
-              list="topic-list" />
-            <datalist id="topic-list">
-              <select id="thread_topic">
-                <option value="">Select your topic</option>
-                <option value="Python">Python</option>
-                <option value="Django">Django</option>
-              </select>
-            </datalist>
-          </div> -->
-
-          <!-- About field -->
-          <!-- <div class="form__group">
-            <label for="thread_about">About</label>
-            <textarea
-              name="thread_about"
-              id="thread_about"
-              placeholder="Write about your study group..."></textarea>
-          </div> -->
-
           <!-- Cancel and Create / Update Thread buttons -->
           <div class="form__action">
-            <a class="btn btn--dark" href="{% url 'home' %}"> Cancel </a>
+            <a class="btn btn--dark" href="{{ request.META.HTTP_REFERER }}">
+              Cancel
+            </a>
             <button class="btn btn--main" type="submit">
               {{ mode }} Thread
             </button>

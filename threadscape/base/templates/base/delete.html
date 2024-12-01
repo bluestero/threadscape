@@ -11,6 +11,7 @@
 <div>
   <!--Form for confirming deletion-->
   <form method="POST" action="">
+    <!-- CSRF Token -->
     {% csrf_token %}
     <p>Are you sure you want to delete '{{ object }}'</p>
     <a href="{{ request.META.HTTP_REFERER }}">Go back</a>

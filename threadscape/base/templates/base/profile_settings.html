@@ -1,0 +1,91 @@
+<!--Inheriting the main template-->
+{% extends 'main.html' %}
+
+<!--Adding title-->
+{% block title %}Edit Profile{% endblock title %}
+
+<!--block content start-->
+{% block content %}
+
+<!-- Main start -->
+<main class="update-account layout">
+  <div class="container">
+    <div class="layout__box">
+      <!-- Back button and header component -->
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <a href="{% url 'profile' request.user.id %}">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32">
+              <title>arrow-left</title>
+              <path
+                d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"></path>
+            </svg>
+          </a>
+          <h3>Edit your profile</h3>
+        </div>
+      </div>
+
+      <!-- Avatar selection field -->
+      <div class="layout__body">
+        <form class="form" action="" method="post">
+          <!-- CSRF Token -->
+          {% csrf_token %}
+
+          <div class="form__group">
+            <label for="profile_pic">Avatar</label>
+            <input id="profile_pic" name="profile_pic" type="file" />
+          </div>
+
+          <!-- Username field -->
+          <div class="form__group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value="{{ request.user.username }}"
+              placeholder="E.g. John doe" />
+          </div>
+
+          <!-- Email field -->
+          <div class="form__group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value="{{ request.user.email }}"
+              placeholder="E.g. john@email.com" />
+          </div>
+
+          <!-- Bio field -->
+          <!-- <div class="form__group">
+            <label for="user_bio">Bio</label>
+            <textarea
+            id="user_bio"
+              name="user_bio"
+              value = "{{ request.user. }}"
+              placeholder="Write about yourself..."></textarea>
+          </div> -->
+
+          <!-- Cancel and Update buttons -->
+          <div class="form__action">
+            <a class="btn btn--dark" href="{% url 'profile' user.id %}"
+              >Cancel
+            </a>
+            <button class="btn btn--main" type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Main end -->
+
+<!--Block content end-->
+{% endblock content %}
