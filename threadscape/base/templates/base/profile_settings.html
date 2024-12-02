@@ -32,7 +32,7 @@
 
       <!-- Avatar selection field -->
       <div class="layout__body">
-        <form class="form" action="" method="post">
+        <form class="form" action="" method="POST">
           <!-- CSRF Token -->
           {% csrf_token %}
 
@@ -48,7 +48,7 @@
           {% endfor %}
 
           <!-- Cancel and Update buttons -->
-          <div class="form__action">
+          <div class="form__action" action="" method="POST">
             <a class="btn btn--dark" href="{% url 'profile' user.id %}"
               >Cancel
             </a>

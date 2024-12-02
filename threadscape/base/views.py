@@ -188,27 +188,6 @@ def profile(request: HttpRequest, pk: str):
 
 #-Function to delete a message from a thread-#
 @login_required(login_url = "login")
-def update_message(request: HttpRequest, pk: str):
-
-    #-Getting the message for the given id-#
-    message = get_object_or_404(models.Message, id = pk)
-    thread_id = message.thread.id
-
-    #-Deleting the record and redirecting to home if the request was through form submit-#
-    if request.method == "POST":
-        message.delete()
-        return redirect("home")
-        return redirect("thread", pk = thread_id)
-
-    #-Creating the context object to render-#
-    context = {"object": message}
-
-    #-Returning the rendered page-#
-    return render(request, "base/delete.html", context)
-
-
-#-Function to delete a message from a thread-#
-@login_required(login_url = "login")
 def delete_message(request: HttpRequest, pk: str):
 
     #-Getting the message for the given id-#
@@ -340,8 +319,43 @@ def update_profile(request: HttpRequest):
     #-Creating the form from the user instance-#
     form = forms.UserForm(instance = request.user)
 
+    #-Creating a new user-#
+    user = models.User.objects.get(id = request.user.id)
+
+    #-Checking if method is POST, meaning form was submitted-#
+    if request.method == "POST":
+
+        #-Getting the copy of the POST request-#
+        post_data = request.POST.copy()
+
+        #-Lowercasing the username-#
+        post_data["username"] = post_data["username"].lower()
+
+        #-Filling the form object using the submitted data-#
+        form = forms.UserForm(post_data, instance = user)
+
+        #-Checking if the form and its data is valid-#
+        if form.is_valid():
+
+            #-Saving the updated data-#
+            form.save()
+
+            #-Redirecting to the home page-#
+            return redirect("profile", pk = request.user.id)
+
+        #-Else returning error message-#
+        else:
+
+            #-Throwing username taken message if username exists-#
+            if form.errors.get("username"):
+                messages.error(request, f"The username '{request.POST.get('username')}' is already taken.")
+
+            #-Else throwing a general error response-#
+            else:
+                messages.error(request, "Please correct the errors below.")
+
     #-Creating the context object to render-#
-    context = {"form": form}
+    context = {"form": forms.UserForm(instance = request.user)}
 
     #-Returning the rendered page-#
     return render(request, "base/profile_settings.html", context)

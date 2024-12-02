@@ -152,9 +152,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Message box form-->
       <div class="thread__message">
-        <form action="#">
-          <input name="" placeholder="Write your message here..." />
+        <form action="" method="POST">
+          <!-- CSRF Token -->
+          {% csrf_token %}
+          <input name="body" placeholder="Write your message here..." />
         </form>
       </div>
     </div>
