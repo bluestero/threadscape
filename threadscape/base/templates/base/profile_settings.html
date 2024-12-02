@@ -36,42 +36,16 @@
           <!-- CSRF Token -->
           {% csrf_token %}
 
+          <!--Iterating the threads and adding them dynamically-->
+          {% for field in form %}
+
           <div class="form__group">
-            <label for="profile_pic">Avatar</label>
-            <input id="profile_pic" name="profile_pic" type="file" />
+            <label for="{{ field.label }}">{{ field.label }}</label>
+            {{ field }}
           </div>
 
-          <!-- Username field -->
-          <div class="form__group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value="{{ request.user.username }}"
-              placeholder="E.g. John doe" />
-          </div>
-
-          <!-- Email field -->
-          <div class="form__group">
-            <label for="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value="{{ request.user.email }}"
-              placeholder="E.g. john@email.com" />
-          </div>
-
-          <!-- Bio field -->
-          <!-- <div class="form__group">
-            <label for="user_bio">Bio</label>
-            <textarea
-            id="user_bio"
-              name="user_bio"
-              value = "{{ request.user. }}"
-              placeholder="Write about yourself..."></textarea>
-          </div> -->
+          <!-- For loop end -->
+          {% endfor %}
 
           <!-- Cancel and Update buttons -->
           <div class="form__action">

@@ -337,4 +337,11 @@ def delete_thread(request: HttpRequest, pk: str):
 @login_required(login_url = "login")
 def update_profile(request: HttpRequest):
 
-    return render(request, "base/profile_settings.html")
+    #-Creating the form from the user instance-#
+    form = forms.UserForm(instance = request.user)
+
+    #-Creating the context object to render-#
+    context = {"form": form}
+
+    #-Returning the rendered page-#
+    return render(request, "base/profile_settings.html", context)
