@@ -39,7 +39,6 @@ def login_page(request: HttpRequest):
                 login(request, user)
                 return redirect("home")
 
-
             #-Throwing error if the authentication failed-#
             else:
                 messages.error(request, f"Invalid password entered for '{username}'.")
@@ -109,7 +108,7 @@ def home(request: HttpRequest):
     topic = request.GET.get("topic", "")
 
     #-Fetching all the thread and topic records-#
-    topics = models.Topic.objects.all()
+    topics = models.Topic.objects.all()[:5]
     threads = models.Thread.objects.filter(
         Q(topic__name__icontains = topic) |
         Q(name__icontains = topic) |
@@ -130,6 +129,35 @@ def home(request: HttpRequest):
     return render(request, "base/home.html", context)
 
 
+#-Function to render the topics page-#
+def topics_page(request: HttpRequest):
+
+    #-Getting the topic filter if given else using star-#
+    topic = request.GET.get("topic", "")
+
+    #-Fetching all the topics-#
+    topics = models.Topic.objects.filter(Q(name__icontains = topic))
+
+    #-Creating the context object to render-#
+    context = {"topics": topics}
+
+    #-Returning the rendered page-#
+    return render(request, "base/topics.html", context)
+
+
+#-Function to render the activity page-#
+def activity_page(request: HttpRequest):
+
+    #-Fetching all the messages-#
+    thread_messages = models.Message.objects.all()
+
+    #-Creating the context object to render-#
+    context = {"thread_messages": thread_messages}
+
+    #-Returning the rendered page-#
+    return render(request, "base/activity.html", context)
+
+
 #-Function to render the selected thread-#
 def thread(request: HttpRequest, pk: str):
 
@@ -137,7 +165,6 @@ def thread(request: HttpRequest, pk: str):
     thread = get_object_or_404(models.Thread, id = pk)
 
     #-Getting the messages for the given thread-#
-    thread_messages = models.Message.objects.filter(thread = pk)
     thread_messages = thread.message_set.all()
 
     #-Getting all the participants of the thread-#
@@ -198,7 +225,7 @@ def delete_message(request: HttpRequest, pk: str):
     if request.method == "POST":
         message.delete()
         return redirect("home")
-        return redirect("thread", pk = thread_id)
+        return redirect("thread", pk = thread_id) #TODO
 
     #-Creating the context object to render-#
     context = {"object": message}

@@ -153,7 +153,8 @@
         </div>
       </div>
 
-      <!-- Message box form-->
+      <!-- Only allowing message permission if user is logged in -->
+      {% if user.is_authenticated %}
       <div class="thread__message">
         <form action="" method="POST">
           <!-- CSRF Token -->
@@ -161,12 +162,15 @@
           <input name="body" placeholder="Write your message here..." />
         </form>
       </div>
+      {% endif %}
     </div>
     <!-- Thread div end -->
 
     <!-- Participants div start -->
     <div class="participants">
-      <h3 class="participants__top">Participants <span>(5.3k Joined)</span></h3>
+      <h3 class="participants__top">
+        Participants <span>({{ participants.count }} Joined)</span>
+      </h3>
       <div class="participants__list scroll">
         <!--Iterating the participants and adding them dynamically-->
         {% for participant in participants %}

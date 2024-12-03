@@ -17,9 +17,9 @@
     {% for topic in topics %}
     <div>
       <li>
-        <a href="{% url 'home' %}?topic={{ topic.name }}"
-          >{{ topic.name }}<span>{{ topic.thread_set.all.count }}</span></a
-        >
+        <a href="{% url 'home' %}?topic={{ topic.name }}">
+          {{ topic.name }}<span>{{ topic.thread_set.count }}</span>
+        </a>
       </li>
 
       <!--Div and for loop end-->
@@ -30,7 +30,7 @@
   </ul>
 
   <!-- More button -->
-  <a class="btn btn--link" href="topics.html">
+  <a class="btn btn--link" href="{% url 'topics' %}">
     More
     <svg
       version="1.1"

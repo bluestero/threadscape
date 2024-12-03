@@ -7,64 +7,133 @@
 <!--block content start-->
 {% block content %}
 
-<!--Main container div start-->
-<div>
-  <!-- Render login form if page is login -->
-  {% if page == 'login' %}
+<!-- Render login form if page is login -->
+{% if page == 'login' %}
 
-  <!-- Login form div start -->
-  <div>
-    <!-- Form for user login -->
-    <form method="POST" action="">
-      <!-- CSRF Token -->
-      {% csrf_token %}
+<!-- Main start -->
+<main class="auth layout">
+  <!-- Login form start -->
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Login</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <h2 class="auth__tagline">Login to join in the fun!</h2>
 
-      <!-- Username field -->
-      <label>Username</label>
-      <input type="text" name="username" placeholder="Enter username" />
+        <form class="form" action="" method="POSt">
+          <!-- CSRF Token -->
+          {% csrf_token %}
 
-      <!-- Password Field -->
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Enter username" />
+          <!-- Username field -->
+          <div class="form__group form_group">
+            <label for="thread_name">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="e.g. jhumri" />
+          </div>
 
-      <!-- Submit button to login -->
-      <input type="submit" value="Login" />
-    </form>
+          <!-- Password field -->
+          <div class="form__group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+          </div>
 
-    <!-- Link to switch to register page -->
-    <p>Haven't signed up yet?</p>
-    <a href="{% url 'register' %}">Sign-up now!</a>
+          <!-- Loginbutton -->
+          <button class="btn btn--main" type="submit">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32">
+              <title>lock</title>
+              <path
+                d="M27 12h-1v-2c0-5.514-4.486-10-10-10s-10 4.486-10 10v2h-1c-0.553 0-1 0.447-1 1v18c0 0.553 0.447 1 1 1h22c0.553 0 1-0.447 1-1v-18c0-0.553-0.447-1-1-1zM8 10c0-4.411 3.589-8 8-8s8 3.589 8 8v2h-16v-2zM26 30h-20v-16h20v16z"></path>
+              <path
+                d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z"></path>
+            </svg>
+            Login
+          </button>
+        </form>
 
-    <!-- Login form div end -->
+        <!-- Link to switch to the register form -->
+        <div class="auth__action">
+          <p>Haven't signed up yet?</p>
+          <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Login form end -->
 
   <!-- Else render the registration page -->
   {% else %}
 
-  <!-- Registration form div start-->
-  <div>
-    <!-- Form for user register -->
-    <form method="POST" action="">
-      <!-- CSRF Token -->
-      {% csrf_token %}
+  <!-- Registration form start  -->
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Login</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <h2 class="auth__tagline">Login to join in the fun!</h2>
 
-      <!--Form for creating a thread-->
-      {{ form.as_p }}
+        <form class="form" action="" method="POSt">
+          <!-- CSRF Token -->
+          {% csrf_token %}
 
-      <!-- Submit button to register -->
-      <input type="submit" value="Register" />
-    </form>
+          <!--Iterating the form fields and adding them dynamically-->
+          {% for field in form %}
+          <!-- Field content -->
+          <div class="form__group form_group">
+            <label for="thread_name">{{ field.label }}</label>
+            {{ field }}
+          </div>
+          {% endfor %}
 
-    <!-- Link to switch to register page -->
-    <p>Already signed up?</p>
-    <a href="{% url 'login' %}">Sign-in now!</a>
+          <!-- Loginbutton -->
+          <button class="btn btn--main" type="submit">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32">
+              <title>lock</title>
+              <path
+                d="M27 12h-1v-2c0-5.514-4.486-10-10-10s-10 4.486-10 10v2h-1c-0.553 0-1 0.447-1 1v18c0 0.553 0.447 1 1 1h22c0.553 0 1-0.447 1-1v-18c0-0.553-0.447-1-1-1zM8 10c0-4.411 3.589-8 8-8s8 3.589 8 8v2h-16v-2zM26 30h-20v-16h20v16z"></path>
+              <path
+                d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z"></path>
+            </svg>
+            Register
+          </button>
+        </form>
 
-    <!-- Registration form div end -->
+        <!-- Link to switch to the register form -->
+        <div class="auth__action">
+          <p>Already have an account?</p>
+          <a href="{% url 'login' %}" class="btn btn--link">Login</a>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Registration form end  -->
+</main>
+<!-- Main end -->
 
-  <!-- If block end -->
-  {% endif %}
+<!-- If statement end -->
+{% endif %}
 
-  <!--Main container div and block content end-->
-</div>
+<!--Block content end-->
 {% endblock content %}

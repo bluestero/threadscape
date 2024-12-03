@@ -2,7 +2,7 @@
 {% extends 'main.html' %}
 
 <!--Adding title-->
-{% block title %}Edit Profile{% endblock title %}
+{% block title %}Confirm Delete{% endblock title %}
 
 <!--block content start-->
 {% block content %}
@@ -33,6 +33,8 @@
       <!-- Confirmation message and button-->
       <div class="layout__body">
         <form class="form" action="" method="POST">
+          <!-- CSRF Token -->
+          {% csrf_token %}
           <div class="form__group">
             <p>Are you sure you want to delete "{{ object }}"?</p>
           </div>
