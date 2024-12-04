@@ -7,12 +7,12 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Render login form if page is login -->
+<!--Render login form if page is login-->
 {% if page == 'login' %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="auth layout">
-  <!-- Login form start -->
+  <!--Login form start-->
   <div class="container">
     <div class="layout__box">
       <div class="layout__boxHeader">
@@ -24,10 +24,10 @@
         <h2 class="auth__tagline">Login to join in the fun!</h2>
 
         <form class="form" action="" method="POSt">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
 
-          <!-- Username field -->
+          <!--Username field-->
           <div class="form__group form_group">
             <label for="thread_name">Username</label>
             <input
@@ -37,7 +37,7 @@
               placeholder="e.g. jhumri" />
           </div>
 
-          <!-- Password field -->
+          <!--Password field-->
           <div class="form__group">
             <label for="password">Password</label>
             <input
@@ -47,7 +47,7 @@
               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
           </div>
 
-          <!-- Loginbutton -->
+          <!--Loginbutton-->
           <button class="btn btn--main" type="submit">
             <svg
               version="1.1"
@@ -65,7 +65,7 @@
           </button>
         </form>
 
-        <!-- Link to switch to the register form -->
+        <!--Link to switch to the register form-->
         <div class="auth__action">
           <p>Haven't signed up yet?</p>
           <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
@@ -73,12 +73,12 @@
       </div>
     </div>
   </div>
-  <!-- Login form end -->
+  <!--Login form end-->
 
-  <!-- Else render the registration page -->
+  <!--Else render the registration page-->
   {% else %}
 
-  <!-- Registration form start  -->
+  <!--Registration form start -->
   <div class="container">
     <div class="layout__box">
       <div class="layout__boxHeader">
@@ -90,19 +90,19 @@
         <h2 class="auth__tagline">Login to join in the fun!</h2>
 
         <form class="form" action="" method="POSt">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
 
           <!--Iterating the form fields and adding them dynamically-->
           {% for field in form %}
-          <!-- Field content -->
+          <!--Field content-->
           <div class="form__group form_group">
             <label for="thread_name">{{ field.label }}</label>
             {{ field }}
           </div>
           {% endfor %}
 
-          <!-- Loginbutton -->
+          <!--Loginbutton-->
           <button class="btn btn--main" type="submit">
             <svg
               version="1.1"
@@ -120,7 +120,7 @@
           </button>
         </form>
 
-        <!-- Link to switch to the register form -->
+        <!--Link to switch to the register form-->
         <div class="auth__action">
           <p>Already have an account?</p>
           <a href="{% url 'login' %}" class="btn btn--link">Login</a>
@@ -128,11 +128,11 @@
       </div>
     </div>
   </div>
-  <!-- Registration form end  -->
+  <!--Registration form end -->
 </main>
-<!-- Main end -->
+<!--Main end-->
 
-<!-- If statement end -->
+<!--If statement end-->
 {% endif %}
 
 <!--Block content end-->

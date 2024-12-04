@@ -7,11 +7,11 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="update-account layout">
   <div class="container">
     <div class="layout__box">
-      <!-- Back button and header component -->
+      <!--Back button and header component-->
       <div class="layout__boxHeader">
         <div class="layout__boxTitle">
           <a href="{% url 'profile' request.user.id %}">
@@ -30,10 +30,10 @@
         </div>
       </div>
 
-      <!-- Avatar selection field -->
+      <!--Avatar selection field-->
       <div class="layout__body">
         <form class="form" action="" method="POST">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
 
           <!--Iterating the threads and adding them dynamically-->
@@ -44,10 +44,10 @@
             {{ field }}
           </div>
 
-          <!-- For loop end -->
+          <!--For loop end-->
           {% endfor %}
 
-          <!-- Cancel and Update buttons -->
+          <!--Cancel and Update buttons-->
           <div class="form__action" action="" method="POST">
             <a class="btn btn--dark" href="{% url 'profile' user.id %}"
               >Cancel
@@ -59,7 +59,7 @@
     </div>
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

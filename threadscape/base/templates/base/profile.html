@@ -7,29 +7,29 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="profile-page layout layout--3">
   <div class="container">
     <!--Topic component-->
     {% include 'base/topics_component.html' %}
 
-    <!-- Thread List Start -->
+    <!--Thread List Start-->
     <div class="threadList">
-      <!-- Profile div start -->
+      <!--Profile div start-->
       <div class="profile">
-        <!-- Profile avatar -->
+        <!--Profile avatar-->
         <div class="profile__avatar">
           <div class="avatar avatar--large active">
             <img src="https://randomuser.me/api/portraits/men/11.jpg" />
           </div>
         </div>
 
-        <!-- Profile Name and Edit -->
+        <!--Profile Name and Edit-->
         <div class="profile__info">
           <h3>{{ user.username }}</h3>
           <p>@{{ user.username }}</p>
 
-          <!-- Only allowing the profile owner to edit their profile -->
+          <!--Only allowing the profile owner to edit their profile-->
           {% if request.user == user %}
           <a href="{% url 'update-profile' %}" class="btn btn--main btn--pill">
             Edit Profile
@@ -37,7 +37,7 @@
           {% endif %}
         </div>
 
-        <!-- Profile about -->
+        <!--Profile about-->
         <div class="profile__about">
           <h3>About</h3>
           <p>
@@ -48,25 +48,25 @@
           </p>
         </div>
       </div>
-      <!-- Profile div end -->
+      <!--Profile div end-->
 
-      <!-- Threads header div start -->
+      <!--Threads header div start-->
       <div class="threadList__header">
         <div>
           <h2>Study Threads Hosted by {{ request.user }}</h2>
         </div>
       </div>
 
-      <!-- Feed component -->
+      <!--Feed component-->
       {% include 'base/feed_component.html' %}
     </div>
-    <!-- Thread List End -->
+    <!--Thread List End-->
 
     <!--Recent Activity component-->
     {% include 'base/activity_component.html' %}
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

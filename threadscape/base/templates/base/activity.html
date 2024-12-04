@@ -7,11 +7,11 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="layout">
   <div class="container">
     <div class="layout__box">
-      <!-- Header and back button -->
+      <!--Header and back button-->
       <div class="layout__boxHeader">
         <div class="layout__boxTitle">
           <a href="{% url 'home' %}">
@@ -30,16 +30,16 @@
         </div>
       </div>
 
-      <!-- Activity feed -->
+      <!--Activity feed-->
       <div class="activities-page layout__body">
         <!--Iterating the thread messages and adding them dynamically-->
         {% for message in thread_messages %}
 
-        <!-- Actvity div start -->
+        <!--Actvity div start-->
         <div class="activities__box">
-          <!-- Profile link and details -->
+          <!--Profile link and details-->
           <div class="activities__boxHeader threadListThread__header">
-            <!-- Link to the user profile -->
+            <!--Link to the user profile-->
             <a
               href="{% url 'profile' message.user.id %}"
               class="threadListThread__author">
@@ -47,14 +47,14 @@
                 <img src="https://randomuser.me/api/portraits/women/11.jpg" />
               </div>
 
-              <!-- Message user and time since created -->
+              <!--Message user and time since created-->
               <p>
                 @{{ message.user }}
                 <span>{{ message.created|timesince }} ago</span>
               </p>
             </a>
 
-            <!-- Only showing delete message option to the owner of the message -->
+            <!--Only showing delete message option to the owner of the message-->
             {% if request.user == message.user %}
             <div class="threadListThread__actions">
               <a href="{% url 'delete-message' message.id%}">
@@ -73,7 +73,7 @@
             {% endif %}
           </div>
 
-          <!-- Message contents -->
+          <!--Message contents-->
           <div class="activities__boxContent">
             <p>
               Replied to thread:
@@ -85,13 +85,13 @@
           </div>
         </div>
 
-        <!-- For loop end -->
+        <!--For loop end-->
         {% endfor %}
       </div>
     </div>
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

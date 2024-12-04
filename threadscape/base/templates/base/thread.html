@@ -7,13 +7,13 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="profile-page layout layout--2">
   <div class="container">
-    <!-- Thread div start -->
+    <!--Thread div start-->
     <div class="thread">
       <div class="thread__top">
-        <!-- Back button -->
+        <!--Back button-->
         <div class="thread__topLeft">
           <a href="{% url 'home' %}">
             <svg
@@ -30,12 +30,12 @@
           <h3>Threadscape</h3>
         </div>
 
-        <!-- Only allowing the thread owner to edit and delete the thread -->
+        <!--Only allowing the thread owner to edit and delete the thread-->
         {% if request.user == thread.host %}
 
-        <!-- Updating div -->
+        <!--Updating div-->
         <div class="thread__topRight">
-          <!-- Edit button -->
+          <!--Edit button-->
           <a href="{% url 'update-thread' thread.id %}">
             <svg
               enable-background="new 0 0 24 24"
@@ -61,7 +61,7 @@
             </svg>
           </a>
 
-          <!-- Delete button -->
+          <!--Delete button-->
           <a href="{% url 'delete-thread' thread.id %}">
             <svg
               version="1.1"
@@ -76,13 +76,13 @@
           </a>
         </div>
 
-        <!-- If statemement end -->
+        <!--If statemement end-->
         {% endif %}
       </div>
 
-      <!-- Thread div -->
+      <!--Thread div-->
       <div class="thread__box scroll">
-        <!-- Thread info div -->
+        <!--Thread info div-->
         <div class="thread__header scroll">
           <div class="thread__info">
             <h3>{{ thread.name }}</h3>
@@ -101,15 +101,15 @@
           <span class="thread__topics">{{ thread.topic }}</span>
         </div>
 
-        <!-- Thread conversation div -->
+        <!--Thread conversation div-->
         <div class="thread__conversation">
           <div class="discussions scroll">
             <!--Iterating the messages and adding them dynamically-->
             {% for message in thread_messages %}
 
-            <!-- Message div -->
+            <!--Message div-->
             <div class="discussion">
-              <!-- Message author details -->
+              <!--Message author details-->
               <div class="discussion__top">
                 <div class="discussion__author">
                   <a href="#" class="discussion__authorInfo">
@@ -124,7 +124,7 @@
                   >
                 </div>
 
-                <!-- Message delete button only to the owner of the message -->
+                <!--Message delete button only to the owner of the message-->
                 {% if request.user == message.user %}
                 <div class="discussion__delete">
                   <a href="{% url 'delete-message' message.id %}">
@@ -143,30 +143,30 @@
                 {% endif %}
               </div>
 
-              <!-- Message content -->
+              <!--Message content-->
               <div class="discussion__details">{{ message.body }}</div>
             </div>
 
-            <!-- For loop end -->
+            <!--For loop end-->
             {% endfor %}
           </div>
         </div>
       </div>
 
-      <!-- Only allowing message permission if user is logged in -->
+      <!--Only allowing message permission if user is logged in-->
       {% if user.is_authenticated %}
       <div class="thread__message">
         <form action="" method="POST">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
           <input name="body" placeholder="Write your message here..." />
         </form>
       </div>
       {% endif %}
     </div>
-    <!-- Thread div end -->
+    <!--Thread div end-->
 
-    <!-- Participants div start -->
+    <!--Participants div start-->
     <div class="participants">
       <h3 class="participants__top">
         Participants <span>({{ participants.count }} Joined)</span>
@@ -185,14 +185,14 @@
           </p>
         </a>
 
-        <!-- For loop end -->
+        <!--For loop end-->
         {% endfor %}
       </div>
     </div>
-    <!-- Participants div end -->
+    <!--Participants div end-->
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

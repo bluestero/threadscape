@@ -1,11 +1,11 @@
 <!--Iterating the threads and adding them dynamically-->
 {% for thread in threads %}
 
-<!-- Thread list div start -->
+<!--Thread list div start-->
 <div class="threadListThread">
-  <!-- Thread user info div -->
+  <!--Thread user info div-->
   <div class="threadListThread__header">
-    <!-- Profile link and details div -->
+    <!--Profile link and details div-->
     <a
       href="{% url 'profile' thread.host.id %}"
       class="threadListThread__author">
@@ -15,19 +15,19 @@
       <span>@{{ thread.host }}</span>
     </a>
 
-    <!-- Time since thread created -->
+    <!--Time since thread created-->
     <div class="threadListThread__actions">
       <span>{{ thread.created|timesince }} ago</span>
     </div>
   </div>
 
-  <!-- Thread content div start -->
+  <!--Thread content div start-->
   <div class="threadListThread__content">
     <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a>
     <p>{{ thread.description }}</p>
   </div>
 
-  <!-- Thread meta data -->
+  <!--Thread meta data-->
   <div class="threadListThread__meta">
     <a href="{% url 'thread' thread.id%}" class="threadListThread__joined">
       <svg
@@ -51,5 +51,5 @@
     <p class="threadListThread__topic">{{ thread.topic }}</p>
   </div>
 </div>
-<!-- For loop and div end -->
+<!--For loop and div end-->
 {% endfor %}

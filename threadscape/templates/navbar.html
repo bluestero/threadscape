@@ -1,7 +1,7 @@
 <!--Loading the static files-->
 {% load static %}
 
-<!-- Header start -->
+<!--Header start-->
 <header class="header header--loggedIn">
   <div class="container">
     <a href="{% url 'home' %}" class="header__logo">
@@ -9,7 +9,7 @@
       <h1>Threadscape</h1>
     </a>
 
-    <!-- Form to search for threads -->
+    <!--Form to search for threads-->
     <form class="header__search" method="GET" action="{% url 'home' %}">
       <label>
         <svg
@@ -27,10 +27,10 @@
     </form>
 
     <nav class="header__menu">
-      <!-- Displaying logout button if the user is authenticated -->
+      <!--Displaying logout button if the user is authenticated-->
       {% if request.user.is_authenticated %}
 
-      <!-- User details -->
+      <!--User details-->
       <div class="header__user">
         <a href="{% url 'profile' request.user.id %}">
           <div class="avatar avatar--medium active">
@@ -39,7 +39,7 @@
           <p>{{ request.user }} <span>@{{ request.user }}</span></p>
         </a>
 
-        <!-- Drop down button -->
+        <!--Drop down button-->
         <button class="dropdown-button">
           <svg
             version="1.1"
@@ -53,7 +53,7 @@
         </button>
       </div>
 
-      <!-- Displaying logout button if the user is authenticated -->
+      <!--Displaying logout button if the user is authenticated-->
       {% else %}
       <a href="{% url 'login' %}">
         <img src="{% static 'images/avatar.svg' %}" />
@@ -63,7 +63,7 @@
       <!--If tag end-->
       {% endif %}
 
-      <!-- Settings button -->
+      <!--Settings button-->
       <div class="dropdown-menu">
         <a href="{% url 'update-profile' %}" class="dropdown-link">
           <svg
@@ -79,7 +79,7 @@
           Settings
         </a>
 
-        <!-- Logout button -->
+        <!--Logout button-->
         <a href="{% url 'logout' %}" class="dropdown-link">
           <svg
             version="1.1"
@@ -96,10 +96,10 @@
           Logout
         </a>
 
-        <!-- Div and nav end -->
+        <!--Div and nav end-->
       </div>
     </nav>
   </div>
 
-  <!-- Header end -->
+  <!--Header end-->
 </header>

@@ -7,11 +7,11 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="create-thread layout">
   <div class="container">
     <div class="layout__box">
-      <!-- Header and back button -->
+      <!--Header and back button-->
       <div class="layout__boxHeader">
         <div class="layout__boxTitle">
           <a href="{% url 'home' %}">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <!-- Search bar -->
+      <!--Search bar-->
       <div class="topics-page layout__body">
         <form class="header__search" action="" method="GET">
           <label>
@@ -48,7 +48,7 @@
           </label>
         </form>
 
-        <!-- Topics list -->
+        <!--Topics list-->
         <ul class="topics__list">
           <li>
             <a href="{% url 'topics' %}" class="active">
@@ -69,7 +69,7 @@
     </div>
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

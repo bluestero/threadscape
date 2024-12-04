@@ -7,19 +7,19 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="layout layout--3">
   <div class="container">
     <!--Topic component-->
     {% include 'base/topics_component.html' %}
 
-    <!-- Feed div start -->
+    <!--Feed div start-->
     <div class="threadList">
-      <!-- Mobile compatible div start -->
+      <!--Mobile compatible div start-->
       <div class="mobile-menu">
-        <!-- Mobile search bar -->
+        <!--Mobile search bar-->
         <form class="header__search" action="" method="GET">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
           <label>
             <svg
@@ -36,7 +36,7 @@
           </label>
         </form>
 
-        <!-- Mobile menu items -->
+        <!--Mobile menu items-->
         <div class="mobile-menuItems">
           <a class="btn btn--main btn--pill" href="{% url 'topics' %}">
             Browse Topics
@@ -46,18 +46,18 @@
           </a>
         </div>
 
-        <!-- Mobile compatible div end -->
+        <!--Mobile compatible div end-->
       </div>
 
-      <!-- Threads header div start -->
+      <!--Threads header div start-->
       <div class="threadList__header">
-        <!-- Thread count -->
+        <!--Thread count-->
         <div>
           <h2>Threads</h2>
           <p>{{ thread_count }} Threads available</p>
         </div>
 
-        <!-- Create thread button -->
+        <!--Create thread button-->
         <a class="btn btn--main" href="{% url 'create-thread' %}">
           <svg
             version="1.1"
@@ -72,20 +72,20 @@
           Create Thread
         </a>
 
-        <!-- Threads header div end -->
+        <!--Threads header div end-->
       </div>
 
-      <!-- Feed component -->
+      <!--Feed component-->
       {% include 'base/feed_component.html' %}
     </div>
-    <!-- Feed div end -->
+    <!--Feed div end-->
 
     <!--Recent Activity component-->
     {% include 'base/activity_component.html' %}
   </div>
-  <!-- Container div end -->
+  <!--Container div end-->
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

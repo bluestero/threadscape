@@ -7,11 +7,11 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="delete-item layout">
   <div class="container">
     <div class="layout__box">
-      <!-- Back button -->
+      <!--Back button-->
       <div class="layout__boxHeader">
         <div class="layout__boxTitle">
           <a href="{{ request.META.HTTP_REFERER }}">
@@ -30,10 +30,10 @@
         </div>
       </div>
 
-      <!-- Confirmation message and button-->
+      <!--Confirmation message and button-->
       <div class="layout__body">
         <form class="form" action="" method="POST">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
           <div class="form__group">
             <p>Are you sure you want to delete "{{ object }}"?</p>
@@ -46,7 +46,7 @@
     </div>
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}

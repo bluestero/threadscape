@@ -7,7 +7,7 @@
 <!--block content start-->
 {% block content %}
 
-<!-- Main start -->
+<!--Main start-->
 <main class="create-thread layout">
   <div class="container">
     <div class="layout__box">
@@ -29,12 +29,12 @@
         </div>
       </div>
       <div class="layout__body">
-        <!-- Form start -->
+        <!--Form start-->
         <form method="POST" class="form" action="">
-          <!-- CSRF Token -->
+          <!--CSRF Token-->
           {% csrf_token %}
 
-          <!-- Topic field -->
+          <!--Topic field-->
           <div class="form__group">
             <label for="thread_topic">Enter Topic</label>
             <input
@@ -53,19 +53,19 @@
             </datalist>
           </div>
 
-          <!-- Name field -->
+          <!--Name field-->
           <div class="form__group">
             <label for="thread_name">Name</label>
             {{ form.name }}
           </div>
 
-          <!-- Description field -->
+          <!--Description field-->
           <div class="form__group">
             <label for="thread_description"> Description</label>
             {{ form.description }}
           </div>
 
-          <!-- Cancel and Create / Update Thread buttons -->
+          <!--Cancel and Create / Update Thread buttons-->
           <div class="form__action">
             <a class="btn btn--dark" href="{{ request.META.HTTP_REFERER }}">
               Cancel
@@ -79,7 +79,7 @@
     </div>
   </div>
 </main>
-<!-- Main end -->
+<!--Main end-->
 
 <!--Block content end-->
 {% endblock content %}
