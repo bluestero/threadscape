@@ -17,7 +17,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Loading the config
-with open(BASE_DIR / "config.json", "r") as file:
+with open(BASE_DIR.parent / "config.json", "r") as file:
     config = json.load(file)
 
 
