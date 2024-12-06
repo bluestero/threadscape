@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'styles/cursor.css' %}" />
     <title>{% block title %}Default Title{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="{% static 'scripts/script.js' %}" defer></script>
     <link
       rel="shortcut icon"
       href="{% static 'images/favicon.ico' %}"
@@ -65,5 +66,4 @@
 
     <!--End of Body and HTML-->
   </body>
-  <script type="module" src="{% static 'scripts/script.js' %}" defer></script>
 </html>
