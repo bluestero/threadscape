@@ -1,0 +1,4 @@
+{
+    "ALLOWED_HOSTS": ["62373-3000.2.codesphere.com"],
+    "CSRF_TRUSTED_ORIGINS": ["https://*.codesphere.com"]
+}
