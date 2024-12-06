@@ -1,10 +1,10 @@
 prepare:
   steps:
-    - name: Installing the python dependencies.
-      command: pipenv install -r requirements_old.txt
+    - name: Creating the virtual env and installing the requirements.
+      command: virtualenv env && source env/bin/activate && pip install -r requirements_old.txt
 test:
   steps: []
 run:
   steps:
-  - name: Switch to the new python environment and boot up the FastAPI server.
-    command: source "$(pipenv --venv)/bin/activate" && cd threadscape && python3 manage.py migrate && python3 manage.py runserver 0000:3000
+    - name: Switch to the new python environment and boot up the FastAPI server.
+      command: source env/bin/activate && cd threadscape && python3 manage.py collectstatic && python3 manage.py migrate && python3 manage.py runserver 0000:3000
