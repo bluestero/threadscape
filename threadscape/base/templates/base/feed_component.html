@@ -24,7 +24,7 @@
   <!--Thread content div start-->
   <div class="threadListThread__content">
     <a href="{% url 'thread' thread.id %}">{{ thread.name }}</a>
-    <p>{{ thread.description }}</p>
+    <p>{{ thread.description|truncatechars:200 }}</p>
   </div>
 
   <!--Thread meta data-->

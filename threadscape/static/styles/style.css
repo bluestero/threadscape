@@ -1,15 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
+
 :root {
-  --color-main: #71c6dd;
+  --color-main: #aa8182;
   --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
+  --color-dark: #5c2238;
+  --color-dark-medium: #835757;
+  --color-dark-light: #7c4e4f;
+  --color-dark-strong: #6b3851;
   --color-light: #e5e5e5;
-  --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
+  --color-gray: #ecd2dce1;
+  --color-light-gray: #dfc9d2;
+  --color-bg: #241019;
   --color-success: #5dd693;
   --color-error: #fc4b0b;
 }
@@ -86,7 +88,7 @@ a {
 .btn--link {
   border-radius: 0;
   padding: 0;
-  color: var(--color-main);
+  color: var(--color-light-gray);
   box-shadow: none;
 }
 
@@ -94,18 +96,18 @@ a {
   text-decoration: underline;
 }
 
-.btn--main {
-  background-color: var(--color-main);
-  color: var(--color-dark);
+.btn--dark {
+  color: var(--color-light-gray);
+  background-color: var(--color-bg);
+}
+
+.btn--dark:hover {
+  color: var(--color-light-gray);
+  background-color: var(--color-dark-medium);
 }
 
 .btn:hover {
   opacity: 0.9;
-}
-
-.btn--dark {
-  background-color: var(--color-dark-light);
-  color: var(--color-light);
 }
 
 .btn > svg {
@@ -119,9 +121,14 @@ a {
   font-size: 1.4rem;
   font-weight: 700;
   padding: 6px 2.5rem;
-  color: var(--color-main);
+  color: var(--color-light-gray);
   background: transparent;
   border: 2px solid var(--color-main);
+}
+
+.btn--pill:hover {
+  color: var(--color-light-gray);
+  background-color: var(--color-dark-medium);
 }
 
 .action-button {
@@ -283,11 +290,12 @@ a {
 }
 
 .header__logo > img {
-  height: 3.2rem;
-  width: 3.2rem;
+  height: 5rem;
+  width: 5rem;
 }
 
 .header__logo > h1 {
+  margin-left: -15px;
   font-weight: 700;
   font-size: 2rem;
   color: var(--color-light);
@@ -315,6 +323,10 @@ a {
   border: none;
   outline: none;
   color: var(--color-light);
+}
+
+.header__search input::placeholder {
+  color: var(--color-light-gray);
 }
 
 @media screen and (max-width: 800px) {
@@ -362,7 +374,7 @@ a {
 }
 
 .header__menu span {
-  color: var(--color-main);
+  color: var(--color-light-gray);
   font-weight: 500;
   font-size: 1.4rem;
   display: block;
@@ -561,7 +573,7 @@ a {
 .topics__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-dark-light);
+  color: var(--color-light-gray);
 }
 
 .topics__list {
@@ -577,10 +589,16 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
-.topics__list li a.active,
+.topics__list li a.active {
+  color: var(--color-light-gray);
+}
+
 .topics__list li a:hover {
   color: var(--color-main);
+  text-decoration: underline;
 }
+
+
 
 .topics__list li a span {
   padding: 0.5rem 1rem;
@@ -633,7 +651,7 @@ a {
 
 .threadList__header p {
   font-weight: 500;
-  color: var(--color-dark-light);
+  color: var(--color-light-gray);
 }
 
 /*========== Thread List Thread ==========*/
@@ -652,6 +670,7 @@ a {
 }
 
 .threadListThread__author {
+  color: var(--color-light-gray);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -672,7 +691,6 @@ a {
 
 .threadListThread__actions svg {
   fill: var(--color-main);
-
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -735,7 +753,7 @@ a {
 }
 
 .activities__header h2 {
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark-medium);
   text-transform: uppercase;
   font-weight: 500;
   padding: 1rem 1.5rem;
@@ -880,7 +898,7 @@ a {
 
 .profile__about h3 {
   text-transform: uppercase;
-  color: var(--color-dark-light);
+  color: var(--color-dark-medium);
   margin-bottom: 0.5rem;
 }
 
@@ -889,7 +907,7 @@ a {
 }
 
 .profile-page .threadList__header h2 {
-  color: var(--color-dark-light);
+  color: var(--color-dark-medium);
 }
 
 /*==============================
@@ -926,6 +944,7 @@ a {
 }
 
 .thread__top svg,
+
 .discussion__top svg {
   width: 1.6rem;
   height: 1.6rem;
@@ -962,15 +981,23 @@ a {
 }
 
 .thread__header {
-  max-height: 30vh;
-  overflow-y: auto;
+  height: 25vh;
   position: absolute;
-  width: 95%;
+  width: 100%;
   background: var(--color-dark);
   z-index: 999;
   top: 4.4rem;
   padding-top: 2rem;
-  padding-bottom: 1rem;
+  padding-bottom: 5rem;
+}
+
+.thread__details {
+  width: 90%;
+  max-height: 15vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
 }
 
 @media screen and (max-width: 500px) {
@@ -981,9 +1008,11 @@ a {
 }
 
 .thread__box {
+  /* padding-top: 2rem; */
   padding-left: 2rem;
   padding-right: 2rem;
   height: 80.5vh;
+  background-color: inherit;
   /* overflow-y: auto; */
   padding-bottom: 0;
 }
@@ -999,6 +1028,7 @@ a {
 }
 
 .thread__info {
+  max-width: 95%;
   display: flex;
   justify-content: space-between;
 }
@@ -1006,7 +1036,7 @@ a {
 .thread__info h3 {
   font-size: 2.4rem;
   font-weight: 500;
-  color: var(--color-main);
+  color: var(--color-light-gray);
 }
 
 .thread__hosted p {
@@ -1018,6 +1048,7 @@ a {
 }
 
 .thread__author {
+  color: var(--color-light-gray);
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -1053,18 +1084,27 @@ a {
 
 .discussions {
   background: var(--color-bg);
-  border-radius: 0.7rem;
+  border-radius: 1rem;
   overflow-y: auto;
-  height: 100%;
-  margin-top: 28vh;
-  padding: 0 2rem 4rem 2rem;
+  height: 40vh;
+  margin-top: 35vh;
+  padding: 1rem 2rem 1rem 2rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+/* .discussions::-webkit-scrollbar {
+  display: none;
+} */
+
 .discussion {
-  border-left: 2px solid var(--color-dark);
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--color-dark-strong);
+  border-left: 2px solid var(--color-main);
   padding-left: 1rem;
   margin: 2rem 0;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .discussion__top {
@@ -1085,6 +1125,7 @@ a {
 }
 
 .discussion__authorInfo {
+  color: var(--color-light-gray);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -1096,6 +1137,7 @@ a {
 }
 
 .thread__message {
+  border-radius: 20rem;
   padding: 2rem;
   position: absolute;
   z-index: 111;
@@ -1158,6 +1200,6 @@ a {
 .participant span {
   display: block;
   font-weight: 500;
-  color: var(--color-main);
+  color: var(--color-light-gray);
   font-weight: 1.4rem;
 }

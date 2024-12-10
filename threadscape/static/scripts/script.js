@@ -1,7 +1,5 @@
 import { animateCircles } from "./cursor.js";
 
-console.log("HI");
-
 
 // Menu
 const dropdownMenu = document.querySelector(".dropdown-menu");
