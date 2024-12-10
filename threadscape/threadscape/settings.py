@@ -28,7 +28,7 @@ with open(BASE_DIR.parent / "config.json", "r") as file:
 SECRET_KEY = 'django-insecure-5zw4j1i@#d#(iu9b#_2dz1o##vc3a+os-v#t#7851c((obgqf9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # CSRF Token and CORS Origin handling
 ALLOWED_HOSTS = config.get("ALLOWED_HOSTS", ["*"])
